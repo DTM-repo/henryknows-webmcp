@@ -1,0 +1,16 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/api/explain"
+  to = "/.netlify/functions/explain"
+  status = 200
+
+[[redirects]]
+  from = "/api/intake"
+  to = "/.netlify/functions/intake"
+  status = 200

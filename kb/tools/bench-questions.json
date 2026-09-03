@@ -1,0 +1,86 @@
+[
+ {
+  "id": 1,
+  "topic": "D/S final rule citation + dates",
+  "q": "What is the Federal Register citation for the final rule replacing duration of status with fixed admission periods, and what are its publication and effective dates?",
+  "truth": "FR doc 2026-14439, published July 17, 2026, effective September 15, 2026. The Aug 28, 2025 document (90 FR 42070) is the NPRM, not the final rule."
+ },
+ {
+  "id": 2,
+  "topic": "Fixed admission max + grace periods",
+  "q": "Under the new fixed admission period rule, what is the maximum initial admission period for an F-1 student, and what grace periods apply?",
+  "truth": "Up to 4 years, 30-day pre-program entry window, 30-day grace period after completion under the new rule. Citation must be the FINAL rule (2026-14439), not the NPRM."
+ },
+ {
+  "id": 3,
+  "topic": "Transition: latest stay without EOS",
+  "q": "For an F-1 student admitted for duration of status before the new rule takes effect, what is the latest date they can remain without filing for an extension of stay?",
+  "truth": "November 14, 2030 (transition math per DHS FAQ); 8 CFR 214.1(m)(1)."
+ },
+ {
+  "id": 4,
+  "topic": "English language training cap",
+  "q": "What is the maximum admission period for an F-1 student in an English language training program under the new rule?",
+  "truth": "24 months aggregate plus the 30-day grace period."
+ },
+ {
+  "id": 5,
+  "topic": "Public high school limit",
+  "q": "How long may an F-1 student attend a U.S. public high school?",
+  "truth": "12 months aggregate; INA 214(m)."
+ },
+ {
+  "id": 6,
+  "topic": "D/S student travel + re-entry",
+  "q": "If an F-1 student admitted under duration of status travels abroad and re-enters after September 15, 2026, how are they admitted?",
+  "truth": "Admitted for a fixed period on return \u2014 to the I-20 program end date, max 4 years."
+ },
+ {
+  "id": 7,
+  "topic": "OPT timely-filing transition deadline",
+  "q": "Under the new rule's transition provisions, what is the deadline connected to OPT applications and the rule's publication date?",
+  "truth": "244 days after publication = March 18, 2027; 8 CFR 214.1(m)(1)(i)."
+ },
+ {
+  "id": 8,
+  "topic": "OPT filing window",
+  "q": "When can an F-1 student file for post-completion OPT, and what is the SEVIS recommendation rule?",
+  "truth": "Up to 90 days before the program end date; since September 15, 2026 the window closes 30 days after the program end date (was 60 before the DS final rule); must also file within 30 days of the DSO's SEVIS recommendation; amended 8 CFR 214.2(f)(11)(i)(B)(2), 91 FR 44976."
+ },
+ {
+  "id": 9,
+  "topic": "Post-completion grace period",
+  "q": "What grace period does an F-1 student have after completing their program, and does the new rule change it?",
+  "truth": "60 days currently; 30 days under the new rule once effective. Citation must be the final rule, not '90 FR 42089 / Aug 28 2025' (NPRM)."
+ },
+ {
+  "id": 10,
+  "topic": "Full course of study (UG)",
+  "q": "What is a full course of study for an F-1 undergraduate at a college or university?",
+  "truth": "At least 12 semester/quarter hours; 8 CFR 214.2(f)(6)(i)(B)."
+ },
+ {
+  "id": 11,
+  "topic": "I-901 SEVIS fee amount",
+  "q": "How much is the I-901 SEVIS fee for an F-1 student?",
+  "truth": "$350 (84 FR 23930, since June 2019)."
+ },
+ {
+  "id": 12,
+  "topic": "Transfer while on OPT",
+  "q": "What happens to an F-1 student's OPT if they transfer to another school?",
+  "truth": "OPT authorization auto-terminates at the transfer release date; 5-month rule considerations for the new program."
+ },
+ {
+  "id": 13,
+  "topic": "CPT integral-to-curriculum scrutiny (new)",
+  "q": "Can I authorize CPT for a student's internship if the internship is related to their major but not required for their degree? Anything new I should know?",
+  "truth": "Regulation: 8 CFR 214.2(f)(10)(i) \u2014 integral part of an established curriculum, directly related to major. New: SEVP Broadcast Message 2608-01 (Aug 12, 2026) announces increased scrutiny, documentation requests, and personal DSO liability framing; its 'required for all students / degree impossible without it' language is the broadcast's requested standard, stricter than the regulation, and the BCM is guidance, not a rule."
+ },
+ {
+  "id": 14,
+  "topic": "Public charge post-9/18 (new)",
+  "q": "A student asks whether enrolling in SNAP or Medicaid could affect their immigration status. What should I tell them after this fall?",
+  "truth": "2026 final rule (91 FR 45324, pub 7/20/26, eff 9/18/26) rescinds the 2022 rule; on/after 9/18/26 any means-tested public benefit \u2014 including applying \u2014 may be considered; before that date the 2022 standard (cash assistance/long-term institutionalization) applies. F/J are covered; exposure points are visa issuance, admission at port of entry, later adjustment."
+ }
+]

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <title>Privacy Policy | HenryKnows</title>
+  <meta name="description" content="What HenryKnows collects and why: account email, short-lived chat history, saved answers, and Stripe-handled payments. No ads, no selling data." />
+  <link rel="canonical" href="https://henryknows.info/privacy/" />
+  <meta property="og:title" content="Privacy Policy | HenryKnows" />
+  <meta property="og:description" content="What HenryKnows collects and why: account email, short-lived chat history, saved answers, and Stripe-handled payments. No ads, no selling data." />
+  <meta property="og:url" content="https://henryknows.info/privacy/" />
+  <meta property="og:type" content="website" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #17212f; --text: #223044; --muted: #647386; --line: #d9e1e8;
+      --canvas: #f5f7f8; --surface: #ffffff; --brand: #1f5c4a; --brand-dark: #123f34;
+      --accent: #b8792d; --blue: #315f9f; --radius: 8px;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--canvas); color: var(--text); line-height: 1.7; }
+    header { background: var(--surface); border-bottom: 1px solid var(--line); padding: 14px 20px; }
+    .head-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+    .mark { width: 34px; height: 34px; background: var(--ink); color: white; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-weight: 800; box-shadow: inset 0 -3px 0 var(--accent); text-decoration: none; }
+    .head-title { font-weight: 800; color: var(--ink); text-decoration: none; font-size: 17px; }
+    .head-sub { font-size: 12px; color: var(--muted); }
+    main { max-width: 720px; margin: 0 auto; padding: 36px 20px 60px; font-size: 16px; }
+    h1 { color: var(--ink); font-size: 28px; line-height: 1.25; margin-bottom: 16px; }
+    h2 { color: var(--ink); font-size: 19px; margin: 26px 0 8px; }
+    p, ul { margin-bottom: 13px; }
+    ul { padding-left: 22px; }
+    li { margin-bottom: 6px; }
+    strong { color: var(--ink); }
+    a { color: var(--blue); }
+    .plans { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 22px 0; }
+    @media (max-width: 640px) { .plans { grid-template-columns: 1fr; } }
+    .plan { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; }
+    .plan.featured { border-color: var(--brand); border-width: 2px; }
+    .plan h2 { margin: 0 0 2px; font-size: 17px; }
+    .price { font-size: 26px; font-weight: 800; color: var(--ink); }
+    .price small { font-size: 13px; font-weight: 400; color: var(--muted); }
+    .plan ul { font-size: 14px; margin: 10px 0 16px; }
+    .plan a.btn { margin-top: auto; text-align: center; background: var(--brand); color: white; text-decoration: none; font-weight: 700; padding: 10px 14px; border-radius: var(--radius); }
+    .plan a.btn.secondary { background: var(--surface); color: var(--brand); border: 1px solid var(--brand); }
+    .plan a.btn:hover { background: var(--brand-dark); color: white; }
+    .note { font-size: 13px; color: var(--muted); }
+    form { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; margin: 18px 0; }
+    label { display: block; font-weight: 700; color: var(--ink); font-size: 14px; margin: 12px 0 4px; }
+    input, textarea { width: 100%; border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; font: inherit; }
+    textarea { min-height: 140px; }
+    button[type=submit] { margin-top: 16px; background: var(--brand); color: white; border: none; font-weight: 700; font-size: 15px; padding: 11px 18px; border-radius: var(--radius); cursor: pointer; }
+    button[type=submit]:hover { background: var(--brand-dark); }
+    footer { max-width: 720px; margin: 0 auto; padding: 0 20px 40px; font-size: 12px; color: var(--muted); }
+    footer nav { margin-top: 8px; }
+    footer nav a { color: var(--muted); margin-right: 12px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="head-inner">
+    <a class="mark" href="/">H</a>
+    <div>
+      <a class="head-title" href="/">HenryKnows</a>
+      <div class="head-sub">International student compliance. At your fingertips.</div>
+    </div>
+  </div>
+</header>
+<main>
+
+  <h1>Privacy Policy</h1>
+  <p class="note">Last updated: August 16, 2026</p>
+  <p>The short version: HenryKnows is built to know as little about you as possible. Most of what you do here stays in your own browser, the little we do keep is minimal and short-lived, and we don't sell or rent any of it — ever.</p>
+  <h2>What stays in your browser (we never receive or store it)</h2>
+  <ul>
+    <li><strong>Calculator scenarios.</strong> The Duration Rules Calculator keeps your in-progress answers in your browser's own session storage. Clearing your browser data clears them.</li>
+    <li><strong>Attached PDFs.</strong> If you attach a document in chat, the text is extracted inside your browser — the file itself never leaves your device.</li>
+    <li><strong>Your preferences.</strong> Settings like the Professional/Student answer mode live in your browser's local storage.</li>
+  </ul>
+  <h2>The little we do keep, and for how long</h2>
+  <ul>
+    <li><strong>Account email</strong> — only if you sign up (Google Sign-In or an email code), to operate your account. Stored records are keyed to a hashed form of it.</li>
+    <li><strong>Chat conversations</strong> — kept for signed-in users so you can revisit them, and <strong>deleted automatically after 7 days</strong>. You can delete any conversation sooner from the Recent chats menu.</li>
+    <li><strong>Saved answers</strong> — a paid feature; kept until you delete them, because that's the point of saving them.</li>
+    <li><strong>Payments</strong> — handled entirely by <a href="https://stripe.com/privacy" rel="noopener">Stripe</a>. We never see or store your card number.</li>
+    <li><strong>Contact messages</strong> — kept so we can respond.</li>
+  </ul>
+  <p>Questions you ask are sent to our AI provider to generate the answer and are not used to train models.</p>
+  <h2>What we don't do</h2>
+  <ul>
+    <li>No selling or renting personal information.</li>
+    <li>No advertising and no third-party ad trackers.</li>
+    <li>No profiles built about you. We ask you <em>not</em> to include student names, SEVIS IDs, or other identifiers in questions — the product is designed to work without them.</li>
+  </ul>
+  <h2>Your choices</h2>
+  <p>Delete conversations and saved answers in-app anytime. For account deletion or a copy of your data, <a href="/contact/">contact us</a> and we'll take care of it.</p>
+</main>
+<footer>
+  General information, not legal advice or government guidance; verify with official sources such as <a href="https://studyinthestates.dhs.gov" rel="noopener">studyinthestates.dhs.gov</a> and <a href="https://www.uscis.gov" rel="noopener">uscis.gov</a>.
+  <nav><a href="/about/">About</a><a href="/guides/">Guides</a><a href="/new-duration-rules-calculator/">Calculator</a><a href="/pricing/">Pricing</a><a href="/disclaimer/">Disclaimer</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/contact/">Contact</a></nav>
+</footer>
+</body>
+</html>

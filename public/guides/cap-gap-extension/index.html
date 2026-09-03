@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <title>The Cap-Gap Extension, Explained by a DSO | HenryKnows</title>
+  <meta name="description" content="How the F-1 cap-gap extension really works: who qualifies, the OPT-vs-grace-period trap, why cap-gap sometimes doesn't appear on your I-20, and what a DSO can actually fix." />
+  <link rel="canonical" href="https://henryknows.info/guides/cap-gap-extension/" />
+  <meta property="og:title" content="The Cap-Gap Extension, Explained by a DSO" />
+  <meta property="og:description" content="Who qualifies for cap-gap, the grace-period trap, and the missing-I-20-endorsement problem — from a practicing DSO." />
+  <meta property="og:url" content="https://henryknows.info/guides/cap-gap-extension/" />
+  <meta property="og:type" content="article" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink: #17212f; --text: #223044; --muted: #647386; --line: #d9e1e8;
+      --canvas: #f5f7f8; --surface: #ffffff; --brand: #1f5c4a; --brand-dark: #123f34;
+      --accent: #b8792d; --blue: #315f9f; --radius: 8px;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--canvas); color: var(--text); line-height: 1.7; }
+    header { background: var(--surface); border-bottom: 1px solid var(--line); padding: 14px 20px; }
+    .head-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; gap: 12px; }
+    .mark { width: 34px; height: 34px; background: var(--ink); color: white; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-weight: 800; box-shadow: inset 0 -3px 0 var(--accent); text-decoration: none; }
+    .head-title { font-weight: 800; color: var(--ink); text-decoration: none; font-size: 17px; }
+    .head-sub { font-size: 12px; color: var(--muted); }
+    main { max-width: 720px; margin: 0 auto; padding: 36px 20px 60px; font-size: 16px; }
+    h1 { color: var(--ink); font-size: 28px; line-height: 1.25; margin-bottom: 10px; }
+    .byline { color: var(--muted); font-size: 13px; margin-bottom: 26px; }
+    h2 { color: var(--ink); font-size: 20px; margin: 30px 0 10px; }
+    p { margin-bottom: 14px; }
+    ul, ol { padding-left: 22px; margin-bottom: 14px; }
+    li { margin-bottom: 6px; }
+    strong { color: var(--ink); }
+    a { color: var(--blue); }
+    .keybox { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--brand); border-radius: var(--radius); padding: 14px 16px; margin: 18px 0; }
+    .cite { color: var(--muted); font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; background: var(--surface); font-size: 14px; }
+    th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
+    th { color: var(--ink); background: #eef3f1; }
+    .faq h3 { color: var(--ink); font-size: 16px; margin: 18px 0 6px; }
+    .cta { margin-top: 36px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+    .cta a.btn { display: inline-block; margin-top: 10px; background: var(--brand); color: white; text-decoration: none; font-weight: 700; padding: 10px 16px; border-radius: var(--radius); }
+    .cta a.btn:hover { background: var(--brand-dark); }
+    footer { max-width: 720px; margin: 0 auto; padding: 0 20px 40px; font-size: 12px; color: var(--muted); }
+    .crumbs { max-width: 720px; margin: 0 auto; padding: 14px 20px 0; font-size: 13px; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": "The Cap-Gap Extension, Explained by a DSO",
+        "datePublished": "2026-07-09",
+        "dateModified": "2026-07-09",
+        "author": { "@type": "Organization", "name": "HenryKnows", "url": "https://henryknows.info/about/" },
+        "publisher": { "@type": "Organization", "name": "HenryKnows", "url": "https://henryknows.info" },
+        "mainEntityOfPage": "https://henryknows.info/guides/cap-gap-extension/"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do I qualify for cap-gap if my H-1B was filed during my 60-day grace period?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Partially. A timely H-1B change-of-status petition filed during your grace period extends your F-1 stay, but not your work authorization. Work authorization is only extended if the petition was filed while your OPT was still active." }
+          },
+          {
+            "@type": "Question",
+            "name": "Why doesn't the cap-gap extension show on my I-20?",
+            "acceptedAnswer": { "@type": "Answer", "text": "The extension is automatic by regulation, but the I-20 notation depends on SEVIS receiving your petition data. When it doesn't appear, your DSO can request a data fix through SEVP; the underlying extension exists either way, though employers typically want the endorsed I-20 as proof." }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I travel during cap-gap?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Travel during cap-gap is high-risk: leaving the U.S. while a change-of-status H-1B petition is pending is generally treated as abandoning the change of status. Get advice specific to your case before booking." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+<header>
+  <div class="head-inner">
+    <a class="mark" href="/">H</a>
+    <div>
+      <a class="head-title" href="/">HenryKnows</a>
+      <div class="head-sub">International student compliance. At your fingertips.</div>
+    </div>
+  </div>
+</header>
+<div class="crumbs"><a href="/guides/">← All guides</a></div>
+<main>
+  <h1>The cap-gap extension, explained by a DSO</h1>
+  <div class="byline">By <a href="/about/" style="color:inherit">an active DSO at a large public university</a> · Updated July 9, 2026</div>
+
+  <p>The "cap gap" is the space between two calendars that don't cooperate: OPT authorizations end whenever your degree math says they end, but cap-subject H-1B employment can only begin October 1. The cap-gap extension is the regulation's bridge across that space — automatic in theory, and the source of a remarkable number of panicked emails in practice. <span class="cite">8 CFR 214.2(f)(5)(vi)</span></p>
+
+  <h2>What it does — and the timing distinction everything hinges on</h2>
+  <p>If your employer properly files a cap-subject H-1B petition <strong>requesting a change of status</strong>, and files it while you're still in a valid F-1 period, your F-1 status is automatically extended while the petition is pending, up to September 30. Whether your <em>work authorization</em> extends too depends entirely on when the filing happened:</p>
+
+  <table>
+    <tr><th>H-1B petition filed while…</th><th>Your stay</th><th>Your work authorization</th></tr>
+    <tr><td><strong>OPT is still active</strong> (before your EAD end date)</td><td>Extended</td><td><strong>Extended</strong> — you keep working past the EAD date</td></tr>
+    <tr><td><strong>In your 60-day grace period</strong> (OPT already ended)</td><td>Extended</td><td><strong>Not extended</strong> — you may stay, but not work, until Oct 1</td></tr>
+    <tr><td>After the grace period ended</td><td colspan="2">No cap-gap — you were no longer in status to extend</td></tr>
+  </table>
+
+  <p>That middle row is the trap. Students finish OPT in May, land an offer in June, the employer files in the grace period — and the student assumes they can keep working "because cap-gap." They can stay; they cannot work. The distinction is worth an email to your DSO before your first day back.</p>
+
+  <h2>"It didn't show up on my I-20"</h2>
+  <p>The extension is <em>automatic by regulation</em> — it doesn't depend on paperwork being issued. But the proof employers want (an I-20 with the cap-gap notation) depends on SEVIS matching your H-1B petition data, and that matching fails more often than it should. When it does:</p>
+  <ol>
+    <li>Your DSO can usually issue the cap-gap I-20 once SEVIS shows the petition — bring your receipt notice.</li>
+    <li>If SEVIS never picked it up and there's no extend option on the DSO's side, the fix is a <strong>data fix request through SEVP</strong> — a DSO action, with your receipt number attached. It takes time; start it the day you notice.</li>
+    <li>If your SEVIS record has already auto-completed in the meantime, a data fix can still repair it retroactively. This is fixable — it just isn't fixable <em>fast</em>, so don't sit on it.</li>
+  </ol>
+
+  <div class="keybox">
+    <strong>If the H-1B is denied, withdrawn, or rejected during cap-gap:</strong> the extension ends, and you generally have the standard 60-day grace period from the denial (not from your original OPT end date) to depart, transfer, or change status — unless the denial was for cause (fraud, status violation). Confirm your specific dates with your DSO.
+  </div>
+
+  <h2>Two questions students always ask next</h2>
+  <p><strong>"Can I transfer schools during cap-gap?"</strong> Starting a new program means abandoning the cap-gap extension — the two paths are alternatives, not parallel tracks. Which one to keep depends on how confident you are in the H-1B petition, and that's a real strategic decision worth talking through, not a form to file.</p>
+  <p><strong>"Can I travel?"</strong> Leaving the U.S. while a change-of-status petition is pending is generally treated as abandoning the change of status — meaning consular processing abroad instead of an October 1 switch at home. Some people do it deliberately with counsel; nobody should do it accidentally.</p>
+
+  <div class="cta">
+    <strong>Cap-gap questions are always date-specific.</strong><br>
+    Henry works through your EAD end date, filing date, and petition status — and cites the regulation. Three free questions a month with a free account; please leave out student names and ID numbers.
+    <br><a class="btn" href="/">Ask Henry about your cap-gap →</a>
+  </div>
+
+  <div class="faq">
+    <h2>FAQ</h2>
+    <h3>Does cap-gap apply to STEM OPT students?</h3>
+    <p>Yes — the same rules apply whether you're on standard post-completion OPT or the STEM extension when the H-1B petition is filed.</p>
+    <h3>Do I need to do anything to activate cap-gap?</h3>
+    <p>No filing of your own — it attaches automatically to a properly filed, timely, cap-subject change-of-status H-1B petition. Your action items are proof (the endorsed I-20) and reporting your employment as usual.</p>
+    <h3>My employer filed for consular processing, not change of status. Do I get cap-gap?</h3>
+    <p>No. Cap-gap requires a change-of-status request. With consular processing, your F-1 clock runs out on its own terms and you'd typically depart and re-enter on the H-1B.</p>
+  </div>
+</main>
+<footer>
+  Written by an active DSO at a large public university, in a personal capacity. General information, not legal advice or government guidance; verify with official sources such as <a href="https://studyinthestates.dhs.gov" rel="noopener">studyinthestates.dhs.gov</a> and <a href="https://www.uscis.gov" rel="noopener">uscis.gov</a>.
+</footer>
+</body>
+</html>

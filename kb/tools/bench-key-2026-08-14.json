@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "A": "v2",
+    "v2Ms": 8512,
+    "chatbaseMs": 6283
+  },
+  {
+    "id": 2,
+    "A": "chatbase",
+    "v2Ms": 14778,
+    "chatbaseMs": 8268
+  },
+  {
+    "id": 3,
+    "A": "chatbase",
+    "v2Ms": 26402,
+    "chatbaseMs": 9713
+  },
+  {
+    "id": 4,
+    "A": "chatbase",
+    "v2Ms": 9931,
+    "chatbaseMs": 7671
+  },
+  {
+    "id": 5,
+    "A": "chatbase",
+    "v2Ms": 10345,
+    "chatbaseMs": 5641
+  },
+  {
+    "id": 6,
+    "A": "v2",
+    "v2Ms": 14165,
+    "chatbaseMs": 11216
+  },
+  {
+    "id": 7,
+    "A": "chatbase",
+    "v2Ms": 13385,
+    "chatbaseMs": 7632
+  },
+  {
+    "id": 8,
+    "A": "v2",
+    "v2Ms": 8880,
+    "chatbaseMs": 6833
+  },
+  {
+    "id": 9,
+    "A": "chatbase",
+    "v2Ms": 12550,
+    "chatbaseMs": 9139
+  },
+  {
+    "id": 10,
+    "A": "v2",
+    "v2Ms": 8065,
+    "chatbaseMs": 10086
+  },
+  {
+    "id": 11,
+    "A": "v2",
+    "v2Ms": 6991,
+    "chatbaseMs": 4087
+  },
+  {
+    "id": 12,
+    "A": "v2",
+    "v2Ms": 7067,
+    "chatbaseMs": 6350
+  },
+  {
+    "id": 13,
+    "A": "chatbase",
+    "v2Ms": 17573,
+    "chatbaseMs": 13000
+  },
+  {
+    "id": 14,
+    "A": "v2",
+    "v2Ms": 16294,
+    "chatbaseMs": 11640
+  }
+]

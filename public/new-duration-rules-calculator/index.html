@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Free calculator for the new F-1 duration of status rules (effective September 15, 2026). Map how fixed-period admission affects your stay, travel, OPT, and extensions — built for international students and the professionals who advise them." />
+    <meta name="theme-color" content="#050505" />
+    <link rel="canonical" href="https://henryknows.info/new-duration-rules-calculator/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="New F-1 Duration of Status Rules Calculator" />
+    <meta property="og:description" content="Map exactly how the September 15, 2026 F-1 fixed-period rule affects your study, travel, OPT, and extension timeline." />
+    <meta property="og:url" content="https://henryknows.info/new-duration-rules-calculator/" />
+    <meta property="og:type" content="website" />
+    <title>New F-1 Duration of Status Rules Calculator — F-1 Duration Mapper | HenryKnows</title>
+    <style>
+      .hk-band {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 20px;
+        background: #050505;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.82);
+      }
+      .hk-band a { color: #fff; text-decoration: none; }
+      .hk-band a:hover { text-decoration: underline; }
+      .hk-band .hk-cta {
+        white-space: nowrap;
+        padding: 6px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 999px;
+      }
+      .hk-foot {
+        padding: 14px 20px 26px;
+        background: #050505;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        font-size: 12px;
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .hk-foot a { color: rgba(255, 255, 255, 0.8); }
+      /* Static explainer under the calculator — real page content for readers and
+         for crawlers/AI answer engines that do not run JavaScript. */
+      .hk-explain {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 44px 20px 8px;
+        background: #050505;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: 16px;
+        line-height: 1.65;
+      }
+      .hk-explain h1 { font-size: 22px; line-height: 1.3; color: #fff; margin: 0 0 18px; }
+      .hk-explain h2 { font-size: 17px; color: #fff; margin: 30px 0 10px; }
+      .hk-explain h3 { font-size: 15px; color: rgba(255, 255, 255, 0.92); margin: 20px 0 6px; }
+      .hk-explain p { margin: 0 0 14px; }
+      .hk-explain ul { margin: 0 0 14px; padding-left: 20px; }
+      .hk-explain li { margin-bottom: 5px; }
+      .hk-explain a { color: #fff; }
+      .hk-explain .hk-cite {
+        display: inline-block;
+        font-size: 12px;
+        letter-spacing: 0.02em;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .hk-explain .hk-more {
+        margin-top: 26px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+        font-size: 14px;
+      }
+    </style>
+    <script type="module" crossorigin src="/new-duration-rules-calculator/assets/index-CloNQctI.js"></script>
+    <link rel="stylesheet" crossorigin href="/new-duration-rules-calculator/assets/index-GvvXrpZd.css">
+  </head>
+  <body>
+    <header class="hk-band">
+      <span><a href="/"><strong>HenryKnows</strong></a> · compliance answers for international students and the professionals who advise them</span>
+      <a class="hk-cta" href="/">Ask Henry →</a>
+    </header>
+    <div id="root"></div>
+
+    <!-- Static, crawler-readable explanation of what this tool does and the rule it
+         implements. The calculator itself mounts into #root and is client-rendered,
+         so without this the page was ~1.6KB of readable text: search engines and AI
+         answer engines (which do not execute JavaScript) saw an empty shell on the
+         single highest-intent page on the site. Every figure and citation below is
+         restated from /guides/f1-duration-of-status-ending/ — no new legal claims. -->
+    <section class="hk-explain" aria-labelledby="hk-explain-h">
+      <h1 id="hk-explain-h">F-1 duration of status calculator: the September 15, 2026 fixed-period rule</h1>
+      <p>
+        On <strong>September 15, 2026</strong>, DHS replaces F-1 <em>duration of status</em> with
+        admission for a fixed time period, under the final rule published at
+        <a href="/rules/duration-of-status/">91 FR 44976</a> (July 17, 2026). The calculator above
+        works out which set of rules applies to you, your protected end date, your grace period,
+        and whether you need to file with USCIS — and links each result to the paragraph of the
+        rule it comes from.
+      </p>
+
+      <h2>Which rules apply to you</h2>
+      <p>
+        It turns on two questions: were you in the United States on September 15, 2026, and have
+        you left and re-entered since?
+      </p>
+      <p>
+        <strong>Transition students</strong> — physically in the U.S. on September 15, 2026,
+        maintaining F-1 status, admitted for duration of status — keep old-rules treatment while
+        they remain in the country. That protection runs through the later of the I-20 program end
+        date or the EAD end date in place on September 15, 2026, capped at September 15, 2030,
+        followed by a 60-day departure period (outermost date: November 14, 2030). Two things end
+        it early: leaving and re-entering after September 15, 2026, which converts you to the
+        fixed-date system, and falling out of status. <span class="hk-cite">8 CFR 214.1(m)(1)</span>
+      </p>
+      <p>
+        <strong>Students admitted after September 15, 2026</strong> receive a fixed period of stay
+        matching the program length on the I-20, up to a maximum of four years measured from the
+        I-20 program start date — not from the day you enter — plus a 30-day period after the
+        program on the I-94. English-language training is capped at 24 months and public high
+        school at 12 months. <span class="hk-cite">8 CFR 214.1(a)(4), 214.2(f)(5)(i)</span>
+      </p>
+
+      <h2>Grace periods now come in four sizes</h2>
+      <ul>
+        <li><strong>60 days</strong> — transition students only.</li>
+        <li><strong>30 days</strong> — normal completion under the fixed-period system.</li>
+        <li><strong>30 days</strong> — early completion.</li>
+        <li><strong>15 days</strong> — authorized withdrawal.</li>
+        <li><strong>No departure period at all</strong> — a status violation.</li>
+      </ul>
+      <p class="hk-cite">8 CFR 214.2(f)(5)(v)</p>
+
+      <h2>Needing more time now means filing with USCIS</h2>
+      <p>
+        Under duration of status, more time meant a DSO extending the I-20 in SEVIS. Under the
+        fixed-date system, staying past your admission date requires Form I-539 filed with USCIS,
+        with a DSO-endorsed I-20 and evidence of funds. USCIS must receive it before your
+        authorized stay ends. A timely filing gives authorized stay while pending, and on-campus,
+        CPT, and economic-hardship employment automatically extend for up to 240 days — though not
+        if the extension was filed during the 30-day departure period, which permits study only.
+        Approval is not guaranteed. Each extension can be granted for up to four years.
+        <span class="hk-cite">8 CFR 214.2(f)(7), (f)(5)(viii)</span>
+      </p>
+
+      <h2>The March 18, 2027 OPT carve-out</h2>
+      <p>
+        A transition student who files post-completion OPT (Form I-765), or a STEM OPT extension
+        before the current EAD expires, <strong>on or before March 18, 2027</strong> and while
+        still within their period of admission (including the 60-day period), does not need to file
+        an I-539 for that OPT period. Departing the U.S. before filing forfeits it. DHS may extend
+        the window in six-month increments. <span class="hk-cite">8 CFR 214.1(m)(1)(i)-(iii)</span>
+      </p>
+
+      <h2>Common questions</h2>
+      <div class="hk-qa">
+        <h3>Does the new F-1 rule apply to me if I am already studying in the U.S.?</h3>
+        <p>
+          If you are physically in the United States on September 15, 2026, maintaining F-1 status,
+          and were admitted for duration of status, you are a transition student and keep old-rules
+          treatment while you remain in the country. Leaving and re-entering after that date moves
+          you to the fixed-date system.
+        </p>
+        <h3>How long is the new F-1 admission period?</h3>
+        <p>
+          The length of your program on the I-20, up to a maximum of four years measured from the
+          I-20 program start date. English-language training is capped at 24 months and public high
+          school attendance at 12 months.
+        </p>
+        <h3>Is the F-1 grace period still 60 days?</h3>
+        <p>
+          Only for transition students. Under the fixed-period system, normal completion and early
+          completion carry a 30-day departure period, an authorized withdrawal carries 15 days, and
+          a status violation carries none.
+        </p>
+        <h3>Do I have to file Form I-539 to stay longer?</h3>
+        <p>
+          Yes, if you need to stay past the admission date on your I-94 under the fixed-date system.
+          USCIS must receive the filing before your authorized stay ends; a timely filing gives
+          authorized stay while it is pending, and approval is not guaranteed.
+        </p>
+      </div>
+
+      <p class="hk-more">
+        Longer plain-language explanation:
+        <a href="/guides/f1-duration-of-status-ending/">The F-1 duration of status rule is ending: what changes September 15, 2026</a>
+        · Full rule text: <a href="/rules/duration-of-status/">91 FR 44976</a>
+      </p>
+    </section>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[
+{"@type":"WebApplication","@id":"https://henryknows.info/new-duration-rules-calculator/#app","name":"F-1 Duration Rules Calculator","url":"https://henryknows.info/new-duration-rules-calculator/","applicationCategory":"UtilityApplication","operatingSystem":"Any (web browser)","description":"Free calculator for the F-1 fixed-period admission rule effective September 15, 2026 (91 FR 44976). Works out whether you are a transition or fixed-period student, your protected end date, your grace period, and whether you must file Form I-539 — with each result cited to the Federal Register.","featureList":["Transition vs fixed-period determination","Protected end date and 4-year cap","Grace period (60/30/15/none)","Form I-539 extension-of-stay requirement","March 18 2027 OPT carve-out check","Citations to 91 FR 44976 and 8 CFR"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"HenryKnows","url":"https://henryknows.info/"}},
+{"@type":"FAQPage","@id":"https://henryknows.info/new-duration-rules-calculator/#faq","mainEntity":[
+{"@type":"Question","name":"Does the new F-1 rule apply to me if I am already studying in the U.S.?","acceptedAnswer":{"@type":"Answer","text":"If you are physically in the United States on September 15, 2026, maintaining F-1 status, and were admitted for duration of status, you are a transition student and keep old-rules treatment while you remain in the country. Leaving and re-entering after that date moves you to the fixed-date system."}},
+{"@type":"Question","name":"How long is the new F-1 admission period?","acceptedAnswer":{"@type":"Answer","text":"The length of your program on the I-20, up to a maximum of four years measured from the I-20 program start date. English-language training is capped at 24 months and public high school attendance at 12 months."}},
+{"@type":"Question","name":"Is the F-1 grace period still 60 days?","acceptedAnswer":{"@type":"Answer","text":"Only for transition students. Under the fixed-period system, normal completion and early completion carry a 30-day departure period, an authorized withdrawal carries 15 days, and a status violation carries none."}},
+{"@type":"Question","name":"Do I have to file Form I-539 to stay longer?","acceptedAnswer":{"@type":"Answer","text":"Yes, if you need to stay past the admission date on your I-94 under the fixed-date system. USCIS must receive the filing before your authorized stay ends; a timely filing gives authorized stay while it is pending, and approval is not guaranteed."}}]}]}</script>
+
+    <footer class="hk-foot">
+      This calculator is an informational tool from <a href="/">HenryKnows</a>. It is not legal advice and does not replace
+      guidance from your school's international student office. Every result links to its source in the Federal Register.
+      <a href="/disclaimer/">Full disclaimer</a> · <a href="/about/">About</a> · <a href="/contact/">Contact</a>
+    </footer>
+  </body>
+</html>

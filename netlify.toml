@@ -1,0 +1,37 @@
+# HenryKnows WebMCP challenge demo configuration.
+# A deployment requires the server-side environment variables documented in
+# README.md. Never commit API credentials to this repository.
+
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[functions."chat-proxy-v2"]
+  included_files = ["kb/index/index.json.gz"]
+  external_node_modules = ["@anthropic-ai/sdk"]
+
+[functions."calc-intake"]
+  external_node_modules = ["@anthropic-ai/sdk"]
+
+[functions."calc-explain"]
+  external_node_modules = ["@anthropic-ai/sdk"]
+
+[functions."calc-explain-run-background"]
+  external_node_modules = ["@anthropic-ai/sdk"]
+
+[functions."calc-follow-up"]
+  external_node_modules = ["@anthropic-ai/sdk"]
+
+# Duration Mapper (calculator/) — accept the unhyphenated spelling too
+[[redirects]]
+  from = "/newdurationrulescalculator"
+  to = "/new-duration-rules-calculator/"
+  status = 301
+
+[[redirects]]
+  from = "/newdurationrulescalculator/*"
+  to = "/new-duration-rules-calculator/:splat"
+  status = 301

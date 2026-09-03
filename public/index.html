@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="google-site-verification" content="X5KvvaWdOI9QAwAvqvEQsihV8nE-bCdCW9dE9iBu4OA" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="format-detection" content="telephone=no, email=no, address=no" />
+  <meta name="description" content="AI assistant that answers F-1 and SEVIS regulatory questions for international student advisors — with citations to the primary sources." />
+  <link rel="canonical" href="https://henryknows.info/" />
+  <title>HenryKnows — AI for International Student Advisors</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <link rel="stylesheet" href="/advising/preparation.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #17212f;
+      --text: #223044;
+      --muted: #647386;
+      --line: #d9e1e8;
+      --canvas: #f5f7f8;
+      --surface: #ffffff;
+      --surface-soft: #eef3f1;
+      --brand: #1f5c4a;
+      --brand-dark: #123f34;
+      --accent: #b8792d;
+      --blue: #315f9f;
+      --danger: #ad3f39;
+      --success: #2f7d4f;
+      --shadow: 0 16px 40px rgba(23, 33, 47, 0.08);
+      --radius: 8px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--canvas);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Header ── */
+    .hidden { display: none !important; }
+
+    header {
+      background: var(--surface);
+      color: var(--ink);
+      padding: 0 28px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .header-brand { min-width: 0; }
+    .header-avatar {
+      width: 38px; height: 38px;
+      background: var(--ink);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 16px; color: white;
+      flex-shrink: 0;
+      box-shadow: inset 0 -3px 0 var(--accent);
+    }
+    .header-title { font-size: 18px; font-weight: 800; color: var(--ink); }
+    .header-subtitle { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .header-btn {
+      min-height: 36px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 13px; color: var(--ink); font-weight: 700;
+      background: var(--surface);
+      border: 1px solid var(--line); cursor: pointer;
+      padding: 0 12px; border-radius: var(--radius);
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    }
+    .header-btn:hover { background: var(--surface-soft); border-color: #c7d3dc; }
+    .upgrade-header-btn {
+      background: var(--brand);
+      color: white;
+      border-color: var(--brand);
+      font-weight: 700;
+    }
+    .upgrade-header-btn:hover { background: var(--brand-dark); border-color: var(--brand-dark); }
+    .account { position: relative; }
+    .account-btn {
+      width: 36px; height: 36px; border-radius: var(--radius);
+      background: var(--ink); color: white;
+      border: none; cursor: pointer;
+      font-size: 14px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .account-btn:hover { background: var(--brand-dark); }
+    .account-menu {
+      position: absolute; right: 0; top: 46px;
+      background: var(--surface); color: var(--text);
+      border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      min-width: 220px; overflow: hidden; z-index: 200;
+    }
+    .account-menu.hidden { display: none; }
+    .account-email {
+      padding: 12px 14px; font-size: 12px; color: var(--muted);
+      border-bottom: 1px solid var(--line); word-break: break-all;
+    }
+    .account-menu-item {
+      width: 100%; text-align: left; background: var(--surface); border: none; cursor: pointer;
+      padding: 11px 14px; font-size: 14px; color: var(--ink); font-weight: 700;
+    }
+    .account-menu-item:hover { background: var(--surface-soft); }
+    .modal { position: relative; }
+    .modal-close {
+      position: absolute; top: 10px; right: 14px;
+      background: none; border: none; font-size: 24px; line-height: 1;
+      color: var(--muted); cursor: pointer; padding: 4px;
+    }
+    .modal-close:hover { color: var(--ink); }
+    .quota-badge {
+      font-size: 12px; font-weight: 700;
+      background: var(--surface-soft);
+      border: 1px solid #d6e2dc;
+      color: var(--brand-dark);
+      padding: 5px 9px; border-radius: var(--radius);
+    }
+    .quota-badge.warning { background: #fff4df; border-color: #e6c47a; color: #7a4c00; }
+    .quota-badge.paid { background: #e8f4ec; border-color: #bfdac8; color: var(--success); }
+
+    /* ── Chat Container ── */
+    .chat-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 14px;
+      overflow: hidden;
+    }
+
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      padding: 2px 0 20px;
+      scroll-behavior: smooth;
+    }
+
+    /* ── Message Bubbles ── */
+    .message { display: flex; gap: 12px; min-width: 0; }
+    .message.user { align-self: flex-end; flex-direction: row-reverse; max-width: min(620px, 84%); }
+    .message.henry { align-self: flex-start; width: min(720px, 92%); }
+
+    .avatar {
+      width: 32px; height: 32px; border-radius: var(--radius);
+      background: var(--surface); color: var(--brand-dark);
+      border: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .message.user .avatar { background: var(--ink); border-color: var(--ink); color: white; }
+
+    .bubble {
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      font-size: 14px; line-height: 1.65;
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    .message.henry .bubble {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--brand);
+      color: var(--text);
+      box-shadow: 0 8px 22px rgba(23, 33, 47, 0.05);
+    }
+    .message.henry .bubble ul,
+    .message.henry .bubble ol { padding-left: 20px; margin: 8px 0; }
+    .message.henry .bubble li { margin-bottom: 4px; }
+    .message.henry .bubble p { margin-bottom: 8px; }
+    .message.henry .bubble p:last-child { margin-bottom: 0; }
+    .message.henry .bubble strong { font-weight: 700; color: var(--ink); }
+    .message.henry .bubble code {
+      background: #edf1f5; padding: 2px 5px; border-radius: 4px;
+      font-family: "SFMono-Regular", Consolas, monospace; font-size: 13px;
+    }
+    .message.henry .bubble a { color: var(--blue); }
+    .message.user .bubble {
+      background: var(--ink);
+      color: white;
+      box-shadow: 0 8px 22px rgba(23, 33, 47, 0.1);
+    }
+
+    .typing-indicator {
+      display: flex; gap: 4px; align-items: center;
+      padding: 12px 16px;
+      background: var(--surface); border: 1px solid var(--line);
+      border-left: 3px solid var(--brand);
+      border-radius: var(--radius);
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--muted);
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-6px); }
+    }
+
+    /* ── Input Area ── */
+    .input-area {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px 12px 12px 14px;
+      display: flex; gap: 10px; align-items: flex-end;
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+
+    textarea {
+      flex: 1; border: none; outline: none; resize: none;
+      font-size: 14px; font-family: inherit; line-height: 1.5;
+      min-width: 0;
+      max-height: 120px; min-height: 40px;
+      color: var(--text);
+      background: transparent;
+      padding: 8px 0;
+    }
+    textarea::placeholder { color: #8b98a6; }
+    textarea:disabled { cursor: not-allowed; }
+
+    .send-btn {
+      width: 40px; height: 40px; border-radius: var(--radius);
+      background: var(--brand); color: white;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background 0.2s, transform 0.15s;
+    }
+    .send-btn:hover:not(:disabled) { background: var(--brand-dark); transform: translateY(-1px); }
+    .send-btn:disabled { background: #c7ced6; cursor: not-allowed; transform: none; }
+    .send-btn svg { width: 18px; height: 18px; }
+
+    /* ── Overlay Base ── */
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(23, 33, 47, 0.58);
+      backdrop-filter: blur(6px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100; padding: 20px;
+    }
+    .overlay.hidden { display: none; }
+
+    .modal {
+      background: var(--surface); border-radius: var(--radius);
+      border: 1px solid var(--line);
+      padding: 36px; max-width: 440px; width: 100%;
+      text-align: left;
+      box-shadow: 0 24px 70px rgba(0,0,0,0.24);
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-avatar {
+      width: 48px; height: 48px; border-radius: var(--radius);
+      background: var(--ink); color: white;
+      font-size: 22px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 0 18px;
+      box-shadow: inset 0 -3px 0 var(--accent);
+    }
+    .modal h2 { color: var(--ink); font-size: 23px; line-height: 1.2; margin-bottom: 10px; }
+    .modal p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+    .modal strong { color: var(--ink); }
+
+    /* ── Auth Overlay ── */
+    .auth-divider {
+      display: flex; align-items: center; gap: 12px;
+      color: var(--muted); font-size: 13px; margin: 16px 0;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: ""; flex: 1; height: 1px; background: var(--line);
+    }
+
+    .google-btn {
+      width: 100%; padding: 12px;
+      border: 1px solid var(--line); background: var(--surface);
+      border-radius: var(--radius); cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      font-size: 14px; font-weight: 500; color: #3c4043;
+      transition: background 0.15s, box-shadow 0.15s;
+      margin-bottom: 12px;
+    }
+    .google-btn:hover { background: #f8f9fa; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    .google-icon { width: 18px; height: 18px; }
+
+    .magic-form { text-align: left; }
+    .magic-form label { font-size: 13px; color: var(--ink); font-weight: 700; display: block; margin-bottom: 6px; }
+    .magic-form input {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      font-size: 14px; outline: none; margin-bottom: 10px;
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .magic-form input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(31, 92, 74, 0.12); }
+    .code-input {
+      letter-spacing: 8px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+
+    .primary-btn {
+      width: 100%; padding: 13px;
+      background: var(--brand); color: white;
+      border: none; border-radius: var(--radius); cursor: pointer;
+      font-size: 15px; font-weight: 700; transition: background 0.2s, transform 0.15s;
+    }
+    .primary-btn:hover:not(:disabled) { background: var(--brand-dark); transform: translateY(-1px); }
+    .primary-btn:disabled { background: #aeb8c2; cursor: not-allowed; transform: none; }
+    .secondary-btn {
+      background: var(--surface);
+      color: var(--ink);
+      border: 1px solid var(--line);
+      margin-top: 8px;
+    }
+    .secondary-btn:hover:not(:disabled) { background: var(--surface-soft); color: var(--ink); }
+
+    .sent-message {
+      background: var(--surface-soft); border-radius: var(--radius);
+      border: 1px solid #d6e2dc;
+      padding: 14px; font-size: 14px; color: var(--brand-dark);
+      margin-bottom: 16px; line-height: 1.5;
+    }
+
+    .error-msg { color: var(--danger); font-size: 13px; margin-top: 8px; }
+
+    /* ── Paywall Overlay ── */
+    .price-card {
+      background: var(--surface-soft); border: 1px solid #d6e2dc; border-radius: var(--radius);
+      padding: 20px; margin-bottom: 20px; text-align: left;
+    }
+    .price-label {
+      font-size: 12px; color: var(--brand-dark); font-weight: 800; margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .price-amount { font-size: 34px; font-weight: 800; color: var(--ink); }
+    .price-amount span { font-size: 16px; font-weight: 500; color: var(--muted); }
+    .price-features { margin-top: 12px; }
+    .price-feature {
+      font-size: 13px; color: var(--text);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    }
+    .price-feature::before { content: "✓"; color: var(--success); font-weight: 800; }
+
+    .upgrade-btn {
+      display: block; width: 100%; padding: 14px;
+      background: var(--brand); color: white; text-decoration: none;
+      border: none; cursor: pointer;
+      border-radius: var(--radius); font-size: 15px; font-weight: 800;
+      text-align: center; transition: background 0.2s; margin-bottom: 10px;
+    }
+    .upgrade-btn:hover:not(:disabled) { background: var(--brand-dark); }
+    .upgrade-btn:disabled { background: #aeb8c2; cursor: not-allowed; }
+    .upgrade-btn.student-btn { margin-top: 8px; background: var(--surface); color: var(--brand); border: 1px solid var(--brand); }
+    .upgrade-btn.student-btn:hover:not(:disabled) { background: var(--surface-soft); }
+
+    .secondary-note { font-size: 12px; color: var(--muted); margin-top: 8px; text-align: center; }
+    .secondary-note a { color: var(--blue); font-weight: 700; }
+
+    /* ── Chat History ── */
+    .history-modal { max-width: 560px; }
+    .history-list {
+      display: flex; flex-direction: column; gap: 8px;
+      max-height: min(440px, 60vh);
+      overflow-y: auto;
+    }
+    .history-state {
+      border: 1px dashed var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      font-size: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+    .history-item {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      text-align: left;
+    }
+    .history-open {
+      min-width: 0;
+      border: none;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+    }
+    .history-open:hover .history-title { color: var(--brand-dark); }
+    .history-title {
+      font-size: 14px;
+      font-weight: 800;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .history-meta { margin-top: 4px; color: var(--muted); font-size: 12px; }
+    .history-delete {
+      width: 34px; height: 34px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+    .history-delete:hover { background: #fff4f2; border-color: #e1b5b0; }
+
+    /* ── Save answer action ── */
+    .bubble-actions {
+      display: flex; gap: 8px; margin-top: 8px;
+    }
+    .save-answer-btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--muted);
+      border-radius: var(--radius);
+      font-size: 12px; font-weight: 700;
+      padding: 4px 10px; cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .save-answer-btn:hover { color: var(--brand-dark); border-color: #c7d3dc; }
+    .save-answer-btn.saved { color: var(--success); border-color: #bfdac8; cursor: default; }
+
+    /* ── Saved Answers ── */
+    .saved-modal { max-width: 640px; }
+    .saved-search {
+      width: 100%; padding: 10px 14px;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      font-size: 14px; outline: none; margin-bottom: 10px;
+      color: var(--text);
+    }
+    .saved-search:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(31, 92, 74, 0.12); }
+    .saved-tagbar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .tag-chip {
+      border: 1px solid var(--line); background: var(--surface);
+      color: var(--muted); border-radius: 999px;
+      font-size: 12px; font-weight: 700;
+      padding: 3px 10px; cursor: pointer;
+    }
+    .tag-chip.active { background: var(--brand); border-color: var(--brand); color: white; }
+    .saved-list {
+      display: flex; flex-direction: column; gap: 8px;
+      max-height: min(420px, 55vh);
+      overflow-y: auto;
+    }
+    .saved-item {
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--surface); text-align: left;
+    }
+    .saved-item-head {
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px; align-items: center; padding: 12px;
+      border: none; background: transparent; cursor: pointer;
+      font: inherit; color: var(--ink); text-align: left;
+    }
+    .saved-item-title {
+      font-size: 14px; font-weight: 800;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .saved-item-meta { margin-top: 4px; color: var(--muted); font-size: 12px; }
+    .saved-item-body {
+      border-top: 1px solid var(--line);
+      padding: 12px 14px;
+      font-size: 14px; line-height: 1.65;
+    }
+    .saved-item-body .saved-question {
+      color: var(--muted); font-size: 13px; font-style: italic; margin-bottom: 10px;
+    }
+    .saved-item-body ul, .saved-item-body ol { padding-left: 20px; margin: 8px 0; }
+    .saved-item-body p { margin-bottom: 8px; }
+    .saved-item-body a { color: var(--blue); }
+    .saved-item-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+    /* ── Save modal ── */
+    .save-modal label { font-size: 13px; color: var(--ink); font-weight: 700; display: block; margin-bottom: 6px; }
+    .save-modal input {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      font-size: 14px; outline: none; margin-bottom: 14px;
+      color: var(--text);
+    }
+    .save-modal input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(31, 92, 74, 0.12); }
+
+    /* ── Attachments ── */
+    .attach-btn {
+      width: 40px; height: 40px; border-radius: var(--radius);
+      background: var(--surface); color: var(--muted);
+      border: 1px solid var(--line); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: color 0.15s, border-color 0.15s;
+    }
+    .attach-btn:hover:not(:disabled) { color: var(--brand-dark); border-color: #c7d3dc; }
+    .attach-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+    .attach-btn svg { width: 18px; height: 18px; }
+    .attachment-bar {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--surface); border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 8px 12px; margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+    .attachment-bar.hidden { display: none; }
+    .attachment-name {
+      font-size: 13px; font-weight: 700; color: var(--ink);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .attachment-note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .attachment-remove {
+      margin-left: auto;
+      width: 28px; height: 28px; flex-shrink: 0;
+      border: 1px solid var(--line); border-radius: var(--radius);
+      background: var(--surface); color: var(--danger);
+      cursor: pointer; font-size: 16px; line-height: 1;
+    }
+    .attachment-remove:hover { background: #fff4f2; border-color: #e1b5b0; }
+    .attach-marker { font-size: 12px; opacity: 0.75; margin-top: 6px; }
+    .pii-note { font-size: 11.5px; color: var(--muted); text-align: center; margin-top: 7px; }
+    .mode-toggle { display: flex; justify-content: center; gap: 0; margin-bottom: 8px; }
+    .mode-opt { font-size: 12px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--line); padding: 4px 14px; cursor: pointer; }
+    .mode-opt:first-child { border-radius: 999px 0 0 999px; }
+    .mode-opt:last-child { border-radius: 0 999px 999px 0; border-left: none; }
+    .mode-opt.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+    .pii-links a { color: var(--muted); text-decoration: none; }
+    .pii-links a:hover { text-decoration: underline; }
+
+    /* ── Disclaimer ── */
+    .disclaimer {
+      text-align: center; font-size: 11px; color: var(--muted);
+      padding: 0 16px 12px; background: var(--canvas); flex-shrink: 0;
+    }
+
+    @media (max-width: 500px) {
+      .modal { padding: 30px 22px; }
+      .chat-wrapper { padding: 12px 10px 10px; }
+      .header-subtitle { display: none; }
+      header { height: 60px; padding: 0 12px; gap: 8px; }
+      .header-avatar { width: 34px; height: 34px; }
+      .header-title { font-size: 16px; }
+      .header-right { gap: 6px; }
+      .header-btn { min-height: 34px; padding: 0 9px; font-size: 12px; }
+      #new-chat-btn { display: none; }
+      .message.henry { width: 100%; }
+      .message.user { max-width: 88%; }
+      .bubble { padding: 12px 14px; }
+      .quota-badge { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<header>
+  <div class="header-avatar">H</div>
+  <div class="header-brand">
+    <div class="header-title">HenryKnows</div>
+    <div class="header-subtitle">International student compliance. At your fingertips.</div>
+  </div>
+  <div class="header-right">
+    <span class="quota-badge" id="quota-badge" style="display:none"></span>
+    <button class="header-btn" id="new-chat-btn" title="Start a new chat">New chat</button>
+    <button class="header-btn upgrade-header-btn" id="header-upgrade-btn" style="display:none">Upgrade</button>
+    <button class="header-btn" id="signin-btn">Sign in</button>
+    <div class="account" id="account" style="display:none">
+      <button class="account-btn" id="account-btn" title="Account"><span id="account-initial"></span></button>
+      <div class="account-menu hidden" id="account-menu">
+        <div class="account-email" id="account-email"></div>
+        <button class="account-menu-item" id="history-btn">Recent chats</button>
+        <button class="account-menu-item" id="saved-btn">Saved answers</button>
+        <button class="account-menu-item" id="billing-btn">Manage subscription</button>
+        <button class="account-menu-item" id="signout-btn">Sign out</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ── Chat Area ── -->
+<div class="chat-wrapper">
+  <div class="messages" id="messages"></div>
+  <div class="attachment-bar hidden" id="attachment-bar">
+    <div style="min-width:0">
+      <div class="attachment-name" id="attachment-name"></div>
+      <div class="attachment-note">Text extracted in your browser — the file is never uploaded or stored. Please remove student names and ID numbers first.</div>
+    </div>
+    <button class="attachment-remove" id="attachment-remove" title="Remove attachment">×</button>
+  </div>
+  <div id="preparation-entry"></div>
+  <div class="mode-toggle" id="mode-toggle" role="radiogroup" aria-label="Answer style">
+    <button type="button" class="mode-opt active" data-mode="professional" title="Precise answers with regulatory citations">Professional</button>
+    <button type="button" class="mode-opt" data-mode="student" title="Plain-language answers for students">Student</button>
+  </div>
+  <div class="input-area">
+    <button class="attach-btn" id="attach-btn" title="Attach a PDF (text is extracted in your browser)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+      </svg>
+    </button>
+    <input type="file" id="attach-input" accept="application/pdf" class="hidden" />
+    <textarea id="input" placeholder="Ask a question about international student compliance" rows="1"></textarea>
+    <button class="send-btn" id="send-btn" title="Send">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+  <div class="pii-note">Henry answers regulatory questions — don't include student names or ID numbers.
+    <span class="pii-links">· <a href="/about/">About</a> · <a href="/pricing/">Pricing</a> · <a href="/guides/">Guides</a> · <a href="/new-duration-rules-calculator/">Calculator</a> · <a href="/disclaimer/">Disclaimer</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/contact/">Contact</a></span>
+  </div>
+</div>
+
+<div class="disclaimer">For informational purposes only. Not legal advice. Always verify with official government sources. · <a href="/guides/" style="color:inherit;font-weight:700">F-1 guides</a></div>
+
+<!-- ── Student-info Overlay ── -->
+<div class="overlay hidden" id="pii-overlay">
+  <div class="modal">
+    <button class="modal-close" id="pii-close" title="Close">×</button>
+    <div class="modal-avatar">H</div>
+    <h2>That looks like student information</h2>
+    <p id="pii-body"></p>
+    <button class="primary-btn" id="pii-edit-btn">Go back and edit</button>
+    <button class="primary-btn secondary-btn hidden" id="pii-redact-btn">Remove ID numbers and send</button>
+    <button class="primary-btn secondary-btn hidden" id="pii-send-anyway-btn">Send anyway</button>
+  </div>
+</div>
+
+<!-- ── Auth Overlay ── -->
+<div class="overlay hidden" id="auth-overlay">
+  <div class="modal">
+    <button class="modal-close" id="auth-close" title="Close">×</button>
+    <div class="modal-avatar">H</div>
+    <h2>Keep the conversation going</h2>
+    <p>Create your free account to get <strong>3 questions a month</strong> — no credit card needed.</p>
+
+    <!-- Google Sign-In button (rendered by GSI library) -->
+    <div id="google-signin-btn"></div>
+
+    <div class="auth-divider">or use your email</div>
+
+    <div class="magic-form" id="email-section">
+      <label for="auth-email">Email address</label>
+      <input type="email" id="auth-email" placeholder="you@institution.edu" autocomplete="email" />
+      <button class="primary-btn" id="send-code-btn">Email me a sign-in code</button>
+      <div class="error-msg hidden" id="auth-error"></div>
+    </div>
+
+    <div class="magic-form hidden" id="code-section">
+      <div class="sent-message">
+        Code sent to <strong id="sent-to-email"></strong>.<br>
+        Enter it below — you'll stay right here in this conversation.
+      </div>
+      <label for="auth-code">6-digit code</label>
+      <input class="code-input" type="text" id="auth-code" inputmode="numeric" maxlength="6" placeholder="••••••" />
+      <button class="primary-btn" id="verify-code-btn">Verify &amp; continue</button>
+      <button class="primary-btn secondary-btn" id="resend-code-btn">Resend code</button>
+      <div class="error-msg hidden" id="code-error"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Paywall Overlay ── -->
+<div class="overlay hidden" id="paywall-overlay">
+  <div class="modal">
+    <button class="modal-close" id="paywall-close" title="Close">×</button>
+    <div class="modal-avatar">H</div>
+    <h2>You've used this month's questions</h2>
+    <p>Upgrade to Henry Basic for unlimited access all month long.</p>
+    <div class="price-card">
+      <div class="price-label">Henry Basic</div>
+      <div class="price-amount">$35<span>/month</span></div>
+      <div class="price-features">
+        <div class="price-feature">Unlimited questions, no monthly cap</div>
+        <div class="price-feature">Instant answers on F-1, J-1, OPT, CPT, SEVIS</div>
+        <div class="price-feature">Save and tag answers to build your own playbook</div>
+        <div class="price-feature">Cancel anytime</div>
+      </div>
+    </div>
+    <button class="upgrade-btn" id="upgrade-btn">Upgrade to Henry Basic →</button>
+    <div class="secondary-note" style="margin-top:6px"><a href="#" id="upgrade-yearly-link">Or $299/year — about two months free</a></div>
+    <button class="upgrade-btn student-btn" id="upgrade-student-btn">Student plan — $10/month for 20 questions →</button>
+    <div class="error-msg hidden" id="paywall-error"></div>
+    <div class="secondary-note">Already subscribed? <a href="#" id="already-subscribed-link">Refresh your access</a>.</div>
+  </div>
+</div>
+
+<!-- ── History Overlay ── -->
+<div class="overlay hidden" id="history-overlay">
+  <div class="modal history-modal">
+    <button class="modal-close" id="history-close" title="Close">×</button>
+    <div class="modal-avatar">H</div>
+    <h2>Recent chats</h2>
+    <p>Signed-in chats are kept for 7 days, then removed automatically.</p>
+    <div class="history-list" id="history-list">
+      <div class="history-state">Loading recent chats…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Saved Answers Overlay ── -->
+<div class="overlay hidden" id="saved-overlay">
+  <div class="modal saved-modal">
+    <button class="modal-close" id="saved-close" title="Close">×</button>
+    <div class="modal-avatar">H</div>
+    <h2>Saved answers</h2>
+    <p>Answers you save are kept until you delete them. Tag them to build your own compliance playbook.</p>
+    <input type="search" class="saved-search" id="saved-search" placeholder="Search saved answers…" />
+    <div class="saved-tagbar" id="saved-tagbar"></div>
+    <div class="saved-list" id="saved-list">
+      <div class="history-state">Loading saved answers…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Save Answer Overlay ── -->
+<div class="overlay hidden" id="save-overlay">
+  <div class="modal save-modal">
+    <button class="modal-close" id="save-close" title="Close">×</button>
+    <div class="modal-avatar">H</div>
+    <h2>Save this answer</h2>
+    <p>Give it a title and tags so you can find it again fast.</p>
+    <label for="save-title">Title</label>
+    <input type="text" id="save-title" maxlength="120" />
+    <label for="save-tags">Tags <span style="color:var(--muted);font-weight:500">(comma-separated, e.g. opt, transfer)</span></label>
+    <input type="text" id="save-tags" placeholder="opt, stem, rcl" />
+    <button class="primary-btn" id="save-confirm-btn">Save answer</button>
+    <div class="error-msg hidden" id="save-error"></div>
+  </div>
+</div>
+
+<script>
+  // ─────────────────────────────────────────
+  // CONFIG
+  // ─────────────────────────────────────────
+  const CONFIG = {
+    GOOGLE_CLIENT_ID: "914021283229-60975bn54bs5feqflv45mtegfi8oqsd2.apps.googleusercontent.com",
+    FREE_ANONYMOUS_LIMIT: 1, // one try-it question without an account (David 2026-08-16)
+  };
+  const FN = "/.netlify/functions";
+  let judgeDemo = false;
+  const preparationAccessReady = fetch(`${FN}/preparation-config`).then((response) => response.ok ? response.json() : {}).then((config) => {
+    judgeDemo = config.judgeDemo === true;
+    if (judgeDemo) refreshQuota();
+  }).catch(() => {});
+
+  // ─────────────────────────────────────────
+  // STATE
+  // ─────────────────────────────────────────
+  const state = {
+    email: localStorage.getItem("henry_email") || null,
+    session: localStorage.getItem("henry_session") || null,
+    conversationId: localStorage.getItem("henry_conv_id") || null,
+    answerMode: localStorage.getItem("henry_mode") === "student" ? "student" : "professional",
+    anonCount: parseInt(localStorage.getItem("henry_anon_count") || "0"),
+    isPaid: null,
+    isWaiting: false,
+    pendingEmail: null,
+    attachment: null,
+    savedItems: [],
+    savedTagFilter: null,
+    pendingSave: null,
+    messageHistory: JSON.parse(localStorage.getItem("henry_history") || "[]"),
+  };
+
+  // ─────────────────────────────────────────
+  // DOM REFS
+  // ─────────────────────────────────────────
+  const messagesEl = document.getElementById("messages");
+  const inputEl = document.getElementById("input");
+  const sendBtn = document.getElementById("send-btn");
+  const authOverlay = document.getElementById("auth-overlay");
+  const paywallOverlay = document.getElementById("paywall-overlay");
+  const historyOverlay = document.getElementById("history-overlay");
+  const historyList = document.getElementById("history-list");
+  const quotaBadge = document.getElementById("quota-badge");
+  const signinBtn = document.getElementById("signin-btn");
+  const headerUpgradeBtn = document.getElementById("header-upgrade-btn");
+  const accountEl = document.getElementById("account");
+  const accountMenu = document.getElementById("account-menu");
+
+  // ─────────────────────────────────────────
+  // HELPERS
+  // ─────────────────────────────────────────
+  function authHeaders(extra) {
+    const h = Object.assign({ "Content-Type": "application/json" }, extra || {});
+    if (state.session) h["Authorization"] = "Bearer " + state.session;
+    return h;
+  }
+  function save(k, v) {
+    if (v === null || v === undefined) localStorage.removeItem(k);
+    else localStorage.setItem(k, v);
+  }
+
+  // ─────────────────────────────────────────
+  // INIT
+  // ─────────────────────────────────────────
+  function init() {
+    const params = new URLSearchParams(window.location.search);
+    const justUpgraded = params.get("upgraded");
+    // Clean any legacy magic-link token or upgrade flag from the URL.
+    if (justUpgraded || params.get("token")) window.history.replaceState({}, "", "/");
+
+    if (state.email && state.session) showAccount(state.email);
+
+    // Restore the prior conversation so nothing is lost on reload / sign-in.
+    if (state.messageHistory.length) {
+      renderHistory();
+    } else {
+      addMessage("henry", "How can Henry help you today?");
+    }
+
+    setupInput();
+    setupModeToggle();
+    setupHeader();
+    setupAuthUI();
+    setupGoogleSignIn();
+    refreshQuota();
+
+    if (justUpgraded) {
+      addMessage("henry", "Thanks for subscribing. Your access is being activated — you now have unlimited questions.");
+      setTimeout(refreshQuota, 1500);
+    }
+
+    // Arrivals from /pricing/: /?plan=monthly|yearly#upgrade opens the
+    // upgrade overlay with that plan preselected.
+    if (window.location.hash === "#upgrade") {
+      state.checkoutPlan = params.get("plan") === "yearly" ? "yearly" : "monthly";
+      window.history.replaceState({}, "", "/");
+      setTimeout(showPaywallOverlay, 300);
+    }
+  }
+
+  // ─────────────────────────────────────────
+  // MESSAGES
+  // ─────────────────────────────────────────
+  // Attachment text is embedded in the stored message between these markers so
+  // Henry sees it, but the chat renders only a small 📎 chip.
+  const ATTACH_MARKER = /\n*--- Attached document: (.+?) \(text extracted in browser\) ---\n[\s\S]*?--- End of attached document ---/;
+
+  function addMessage(role, text, opts) {
+    const wrap = document.createElement("div");
+    wrap.className = `message ${role}`;
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = role === "henry" ? "H" : "You";
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    if (role === "henry" && typeof marked !== "undefined") {
+      bubble.innerHTML = marked.parse(text);
+      // Links open in a new tab so the chat is never lost.
+      bubble.querySelectorAll("a[href]").forEach((a) => {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      });
+      if (opts && opts.question) {
+        const actions = document.createElement("div");
+        actions.className = "bubble-actions";
+        const saveBtn = document.createElement("button");
+        saveBtn.className = "save-answer-btn";
+        saveBtn.type = "button";
+        saveBtn.textContent = "Save answer";
+        saveBtn.addEventListener("click", () => beginSaveAnswer(opts.question, text, saveBtn));
+        actions.appendChild(saveBtn);
+        bubble.appendChild(actions);
+      }
+    } else {
+      const m = typeof text === "string" ? text.match(ATTACH_MARKER) : null;
+      if (m) {
+        bubble.textContent = text.replace(ATTACH_MARKER, "").trim();
+        const chip = document.createElement("div");
+        chip.className = "attach-marker";
+        chip.textContent = `📎 ${m[1]}`;
+        bubble.appendChild(chip);
+      } else {
+        bubble.textContent = text;
+      }
+    }
+
+    wrap.appendChild(avatar);
+    wrap.appendChild(bubble);
+    messagesEl.appendChild(wrap);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function renderHistory() {
+    messagesEl.innerHTML = "";
+    let lastQuestion = null;
+    state.messageHistory.forEach((m) => {
+      if (m.role === "assistant") {
+        addMessage("henry", m.content, { question: lastQuestion });
+      } else {
+        lastQuestion = m.content;
+        addMessage("user", m.content);
+      }
+    });
+  }
+
+  function showTyping() {
+    const wrap = document.createElement("div");
+    wrap.className = "message henry";
+    wrap.id = "typing";
+    wrap.innerHTML = `<div class="avatar">H</div><div class="typing-indicator"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
+    messagesEl.appendChild(wrap);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+  function removeTyping() {
+    const t = document.getElementById("typing");
+    if (t) t.remove();
+  }
+
+  // ─────────────────────────────────────────
+  // STUDENT-INFO SCREEN
+  // Henry is a regulatory reference, not a case-file tool. Best-effort catch of
+  // the common leak shapes: SEVIS IDs, labeled ID numbers, pasted student emails.
+  // ─────────────────────────────────────────
+  const SEVIS_ID_RE = /\bN\d{10}\b/g;
+  const LABELED_ID_RE =
+    /(\b(?:EMPL\s?ID|student\s+id|SEVIS\s+(?:id|no\.?|number)|passport\s+(?:no\.?|number)|I-?94(?:\s+(?:no\.?|number))?|A#|alien\s+(?:registration\s+)?number)\s*[:#]?\s*)(?=[A-Z0-9-]*\d)[A-Z0-9][A-Z0-9-]{4,}/gi;
+  const EMAIL_HEADER_RE = /^(?:from|to|cc|subject|sent|date)\s*:/gim;
+
+  function detectStudentInfo(text) {
+    const findings = [];
+    if (text.match(SEVIS_ID_RE) || text.match(LABELED_ID_RE)) findings.push("id");
+    if ((text.match(EMAIL_HEADER_RE) || []).length >= 2) findings.push("email");
+    return findings;
+  }
+  function redactStudentInfo(text) {
+    return text
+      .replace(SEVIS_ID_RE, "[SEVIS ID removed]")
+      .replace(LABELED_ID_RE, "$1[removed]");
+  }
+
+  let pendingPiiText = null;
+  const piiOverlay = document.getElementById("pii-overlay");
+  const piiBody = document.getElementById("pii-body");
+  const piiRedactBtn = document.getElementById("pii-redact-btn");
+  const piiSendAnywayBtn = document.getElementById("pii-send-anyway-btn");
+
+  function closePiiOverlay() {
+    piiOverlay.classList.add("hidden");
+    pendingPiiText = null;
+    inputEl.focus();
+  }
+  document.getElementById("pii-edit-btn").addEventListener("click", closePiiOverlay);
+  document.getElementById("pii-close").addEventListener("click", closePiiOverlay);
+  piiRedactBtn.addEventListener("click", () => {
+    if (pendingPiiText == null) return;
+    const cleaned = redactStudentInfo(pendingPiiText);
+    piiOverlay.classList.add("hidden");
+    pendingPiiText = null;
+    clearAttachment();
+    dispatchMessage(cleaned);
+  });
+  piiSendAnywayBtn.addEventListener("click", () => {
+    if (pendingPiiText == null) return;
+    const text = pendingPiiText;
+    piiOverlay.classList.add("hidden");
+    pendingPiiText = null;
+    clearAttachment();
+    dispatchMessage(text);
+  });
+
+  function showPiiOverlay(findings, text) {
+    pendingPiiText = text;
+    const hasIds = findings.includes("id");
+    const hasEmail = findings.includes("email");
+    if (hasIds && hasEmail) {
+      piiBody.textContent =
+        "This looks like a pasted email that includes a student ID number. Henry answers regulatory questions — it isn't for student case files. ID numbers can be removed automatically, but names cannot, so please edit those out or summarize the question instead.";
+    } else if (hasIds) {
+      piiBody.textContent =
+        "This looks like it includes a student ID number (such as a SEVIS ID). Henry answers regulatory questions — it isn't for student case files.";
+    } else {
+      piiBody.textContent =
+        "This looks like a pasted email. It may contain student names, which can't be removed automatically. Please summarize the situation without identifying the student.";
+    }
+    piiRedactBtn.classList.toggle("hidden", !hasIds);
+    piiSendAnywayBtn.classList.toggle("hidden", hasIds || !hasEmail);
+    piiOverlay.classList.remove("hidden");
+  }
+
+  // ─────────────────────────────────────────
+  // SEND MESSAGE
+  // ─────────────────────────────────────────
+  function setupInput() {
+    sendBtn.addEventListener("click", sendMessage);
+    inputEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    });
+    inputEl.addEventListener("input", () => {
+      inputEl.style.height = "auto";
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + "px";
+    });
+  }
+
+  function setupModeToggle() {
+    const buttons = document.querySelectorAll("#mode-toggle .mode-opt");
+    buttons.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.mode === state.answerMode);
+      btn.addEventListener("click", () => {
+        state.answerMode = btn.dataset.mode;
+        localStorage.setItem("henry_mode", state.answerMode);
+        buttons.forEach((b) => b.classList.toggle("active", b === btn));
+      });
+    });
+  }
+
+  async function sendMessage() {
+    await preparationAccessReady;
+    const typed = inputEl.value.trim();
+    if ((!typed && !state.attachment) || state.isWaiting) return;
+
+    // Anonymous gate. Once a device has ever signed in, anonymous freebies drop to
+    // 0 — so signing out can't hand the user a fresh batch of free questions.
+    const anonLimit = localStorage.getItem("henry_known") ? 0 : CONFIG.FREE_ANONYMOUS_LIMIT;
+    if (!judgeDemo && !state.session && state.anonCount >= anonLimit) {
+      showAuthOverlay();
+      return;
+    }
+
+    let text = typed || "Please review the attached document.";
+    if (state.attachment) {
+      // Build the full text but don't clear the attachment yet — if the
+      // student-info screen fires, the user keeps their draft intact.
+      text += `\n\n--- Attached document: ${state.attachment.name} (text extracted in browser) ---\n${state.attachment.text}\n--- End of attached document ---`;
+    }
+
+    const findings = detectStudentInfo(text);
+    if (findings.length) {
+      showPiiOverlay(findings, text);
+      return;
+    }
+
+    clearAttachment();
+    dispatchMessage(text);
+  }
+
+  async function dispatchMessage(text) {
+    state.messageHistory.push({ role: "user", content: text });
+    save("henry_history", JSON.stringify(state.messageHistory));
+
+    addMessage("user", text);
+    inputEl.value = "";
+    inputEl.style.height = "auto";
+    setWaiting(true);
+    showTyping();
+
+    let liveWrap = null;
+    try {
+      const res = await fetch(`${FN}/chat-proxy-v2`, {
+        method: "POST",
+        headers: authHeaders(),
+        body: JSON.stringify({
+          message: text,
+          messages: state.messageHistory,
+          conversationId: state.conversationId,
+          mode: state.answerMode,
+        }),
+      });
+
+      const ctype = res.headers.get("content-type") || "";
+      let answer = "";
+      let convId = null;
+      let failed = false;
+
+      if (ctype.includes("text/event-stream") && res.body) {
+        // Streamed answer. The network delivers text in uneven chunks; showing
+        // each chunk as it lands made the answer jump several lines at a time.
+        // Instead the incoming text feeds a buffer, and an animation loop
+        // reveals it character by character at a steady pace — accelerating
+        // smoothly when the buffer runs long so the tail never lags the model.
+        removeTyping();
+        const live = addStreamingMessage();
+        liveWrap = live.wrap;
+        let displayed = 0;
+        let streamEnded = false;
+        let cancelled = false;
+        const paint = () => {
+          if (cancelled) return;
+          const backlog = answer.length - displayed;
+          if (backlog > 0) {
+            displayed = Math.min(answer.length, displayed + Math.max(1, Math.ceil(backlog / 32)));
+            live.bubble.innerHTML = marked.parse(answer.slice(0, displayed));
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+          }
+          if (!streamEnded || displayed < answer.length) requestAnimationFrame(paint);
+        };
+        requestAnimationFrame(paint);
+        try {
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+          let buf = "";
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            buf += decoder.decode(value, { stream: true });
+            let idx;
+            while ((idx = buf.indexOf("\n\n")) !== -1) {
+              const line = buf.slice(0, idx);
+              buf = buf.slice(idx + 2);
+              if (!line.startsWith("data: ")) continue;
+              let ev;
+              try { ev = JSON.parse(line.slice(6)); } catch { continue; }
+              if (ev.t === "delta") {
+                answer += ev.text;
+              } else if (ev.t === "done") {
+                convId = ev.conversationId;
+              } else if (ev.t === "error") {
+                failed = true;
+              }
+            }
+          }
+          // Let the reveal finish drawing the tail before swapping bubbles.
+          streamEnded = true;
+          if (!failed) {
+            await new Promise((resolve) => {
+              const check = () => (displayed >= answer.length ? resolve() : setTimeout(check, 50));
+              check();
+            });
+          }
+        } finally {
+          cancelled = true;
+        }
+        liveWrap.remove();
+        liveWrap = null;
+      } else {
+        const data = await res.json();
+        removeTyping();
+        if (data.gated) { showPaywallOverlay(); return; }
+        if (data.error || !data.response) { addMessage("henry", "Sorry, something went wrong. Please try again in a moment."); return; }
+        answer = data.response;
+        convId = data.conversationId;
+      }
+
+      if (failed || !answer) {
+        addMessage("henry", "Sorry, something went wrong. Please try again in a moment.");
+        return;
+      }
+
+      if (convId) {
+        state.conversationId = convId;
+        save("henry_conv_id", convId);
+      }
+
+      if (!state.session) {
+        state.anonCount++;
+        save("henry_anon_count", state.anonCount);
+      }
+
+      state.messageHistory.push({ role: "assistant", content: answer });
+      save("henry_history", JSON.stringify(state.messageHistory));
+      addMessage("henry", answer, { question: text });
+      if (!state.session) refreshQuota(); // only the anonymous taste updates live
+
+      // Recomputed here: `anonLimit` lives in sendMessage's scope, and
+      // referencing it from this function was a latent ReferenceError.
+      const limit = localStorage.getItem("henry_known") ? 0 : CONFIG.FREE_ANONYMOUS_LIMIT;
+      if (!judgeDemo && !state.session && state.anonCount >= limit) {
+        setTimeout(showAuthOverlay, 800);
+      }
+    } catch (err) {
+      if (liveWrap) liveWrap.remove();
+      removeTyping();
+      addMessage("henry", "Sorry, I couldn't connect. Please check your connection and try again.");
+    } finally {
+      setWaiting(false);
+    }
+  }
+
+  function addStreamingMessage() {
+    const wrap = document.createElement("div");
+    wrap.className = "message henry";
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = "H";
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    wrap.appendChild(avatar);
+    wrap.appendChild(bubble);
+    messagesEl.appendChild(wrap);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return { wrap, bubble };
+  }
+
+  function setWaiting(val) {
+    state.isWaiting = val;
+    sendBtn.disabled = val;
+    inputEl.disabled = val;
+  }
+
+  // ─────────────────────────────────────────
+  // QUOTA BADGE
+  // ─────────────────────────────────────────
+  async function refreshQuota() {
+    if (judgeDemo) {
+      quotaBadge.textContent = "Hackathon preview";
+      quotaBadge.className = "quota-badge";
+      quotaBadge.style.display = "inline-block";
+      headerUpgradeBtn.style.display = "none";
+      return;
+    }
+    if (!state.session) {
+      state.isPaid = false;
+      updateUpgradeVisibility();
+      if (localStorage.getItem("henry_known")) { quotaBadge.style.display = "none"; return; }
+      const remaining = Math.max(0, CONFIG.FREE_ANONYMOUS_LIMIT - state.anonCount);
+      quotaBadge.style.display = "inline-block";
+      quotaBadge.textContent = `${remaining} free question${remaining !== 1 ? "s" : ""} left`;
+      quotaBadge.className = "quota-badge" + (remaining <= 1 ? " warning" : "");
+      return;
+    }
+    try {
+      const res = await fetch(`${FN}/check-message-count`, { headers: authHeaders() });
+      const d = await res.json();
+      if (d.tier === "paid") {
+        state.isPaid = true;
+        updateUpgradeVisibility();
+        quotaBadge.style.display = "inline-block";
+        quotaBadge.textContent = "Unlimited";
+        quotaBadge.className = "quota-badge paid";
+      } else if (d.tier === "student") {
+        state.isPaid = false;
+        updateUpgradeVisibility();
+        quotaBadge.style.display = "inline-block";
+        quotaBadge.textContent = `Student · ${d.remaining} left this month`;
+        quotaBadge.className = "quota-badge" + (d.remaining <= 2 ? " warning" : "");
+      } else {
+        state.isPaid = false;
+        updateUpgradeVisibility();
+        // Registered free users: NO countdown by design — the paywall should land
+        // as a friction moment, not something users can ration toward.
+        quotaBadge.style.display = "none";
+      }
+    } catch { /* leave badge as-is */ }
+  }
+
+  // ─────────────────────────────────────────
+  // HEADER: new chat + sign out
+  // ─────────────────────────────────────────
+  function setupHeader() {
+    document.getElementById("new-chat-btn").addEventListener("click", newChat);
+    headerUpgradeBtn.addEventListener("click", () => showPaywallOverlay());
+    signinBtn.addEventListener("click", () => showAuthOverlay());
+    document.getElementById("billing-btn").addEventListener("click", async () => {
+    try {
+      const res = await fetch(`${FN}/create-portal`, { method: "POST", headers: authHeaders() });
+      const d = await res.json();
+      if (d.url) { window.location.href = d.url; return; }
+      addMessage("henry", d.noSubscription
+        ? "You don't have a subscription yet — see the plans at henryknows.info/pricing/."
+        : (d.error || "Couldn't open billing management. Please try again."));
+    } catch {
+      addMessage("henry", "Couldn't open billing management. Please try again.");
+    }
+  });
+  document.getElementById("history-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      accountMenu.classList.add("hidden");
+      showHistoryOverlay();
+    });
+    document.getElementById("saved-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      accountMenu.classList.add("hidden");
+      showSavedOverlay();
+    });
+    document.getElementById("account-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      accountMenu.classList.toggle("hidden");
+    });
+    document.getElementById("signout-btn").addEventListener("click", signOut);
+    document.getElementById("history-close").addEventListener("click", hideHistoryOverlay);
+    // Close the account menu when clicking elsewhere.
+    document.addEventListener("click", () => accountMenu.classList.add("hidden"));
+  }
+  function newChat() {
+    state.messageHistory = [];
+    state.conversationId = null;
+    save("henry_history", null);
+    save("henry_conv_id", null);
+    messagesEl.innerHTML = "";
+    addMessage("henry", "How can Henry help you today?");
+  }
+  function showAccount(email) {
+    document.getElementById("account-initial").textContent = (email[0] || "?").toUpperCase();
+    document.getElementById("account-email").textContent = email;
+    accountEl.style.display = "block";
+    signinBtn.style.display = "none";
+    updateUpgradeVisibility();
+  }
+  function signOut() {
+    state.email = null;
+    state.session = null;
+    state.isPaid = false;
+    save("henry_email", null);
+    save("henry_session", null);
+    state.messageHistory = [];
+    state.conversationId = null;
+    save("henry_history", null);
+    save("henry_conv_id", null);
+    messagesEl.innerHTML = "";
+    addMessage("henry", "How can Henry help you today?");
+    accountEl.style.display = "none";
+    accountMenu.classList.add("hidden");
+    hideHistoryOverlay();
+    hideSavedOverlay();
+    hideSaveOverlay();
+    clearAttachment();
+    signinBtn.style.display = "inline-block";
+    updateUpgradeVisibility();
+    refreshQuota();
+  }
+
+  // ─────────────────────────────────────────
+  // GOOGLE SIGN-IN (verified server-side)
+  // ─────────────────────────────────────────
+  function setupGoogleSignIn() {
+    window.addEventListener("load", () => {
+      if (typeof google === "undefined") return;
+      google.accounts.id.initialize({
+        client_id: CONFIG.GOOGLE_CLIENT_ID,
+        callback: handleGoogleSignIn,
+      });
+      google.accounts.id.renderButton(
+        document.getElementById("google-signin-btn"),
+        { theme: "outline", size: "large", width: 348, text: "continue_with" }
+      );
+    });
+  }
+  async function handleGoogleSignIn(response) {
+    try {
+      const res = await fetch(`${FN}/google-verify`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ credential: response.credential }),
+      });
+      const d = await res.json();
+      if (d.session && d.email) signIn(d.email, d.session);
+      else showAuthError(d.error || "Google sign-in failed.");
+    } catch {
+      showAuthError("Google sign-in failed. Please try the email option.");
+    }
+  }
+
+  // ─────────────────────────────────────────
+  // EMAIL CODE SIGN-IN
+  // ─────────────────────────────────────────
+  function setupAuthUI() {
+    document.getElementById("send-code-btn").addEventListener("click", sendCode);
+    document.getElementById("resend-code-btn").addEventListener("click", sendCode);
+    document.getElementById("verify-code-btn").addEventListener("click", verifyCode);
+    document.getElementById("auth-code").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); verifyCode(); }
+    });
+    document.getElementById("already-subscribed-link").addEventListener("click", (e) => {
+      e.preventDefault();
+      refreshAccess();
+    });
+    document.getElementById("auth-close").addEventListener("click", hideAuthOverlay);
+    document.getElementById("paywall-close").addEventListener("click", hidePaywallOverlay);
+  }
+
+  async function sendCode() {
+    const email = document.getElementById("auth-email").value.trim();
+    if (!email || !email.includes("@")) { showAuthError("Please enter a valid email address."); return; }
+    state.pendingEmail = email;
+    const btn = document.getElementById("send-code-btn");
+    btn.disabled = true; btn.textContent = "Sending…";
+    hideAuthError();
+    try {
+      const res = await fetch(`${FN}/send-code`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const d = await res.json();
+      if (d.success) {
+        document.getElementById("sent-to-email").textContent = email;
+        document.getElementById("email-section").classList.add("hidden");
+        document.getElementById("code-section").classList.remove("hidden");
+        document.getElementById("auth-code").focus();
+      } else {
+        showAuthError(d.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      showAuthError("Couldn't send the code. Please try again.");
+    } finally {
+      btn.disabled = false; btn.textContent = "Email me a sign-in code";
+    }
+  }
+
+  async function verifyCode() {
+    const code = document.getElementById("auth-code").value.trim();
+    const errEl = document.getElementById("code-error");
+    if (!/^\d{6}$/.test(code)) { errEl.textContent = "Enter the 6-digit code."; errEl.classList.remove("hidden"); return; }
+    const btn = document.getElementById("verify-code-btn");
+    btn.disabled = true; btn.textContent = "Verifying…";
+    errEl.classList.add("hidden");
+    try {
+      const res = await fetch(`${FN}/verify-code`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: state.pendingEmail, code }),
+      });
+      const d = await res.json();
+      if (d.valid && d.session) {
+        signIn(d.email, d.session);
+      } else {
+        errEl.textContent = d.error || "Incorrect code.";
+        errEl.classList.remove("hidden");
+      }
+    } catch {
+      errEl.textContent = "Couldn't verify the code. Please try again.";
+      errEl.classList.remove("hidden");
+    } finally {
+      btn.disabled = false; btn.textContent = "Verify & continue";
+    }
+  }
+
+  function showAuthError(msg) {
+    const e = document.getElementById("auth-error");
+    e.textContent = msg; e.classList.remove("hidden");
+  }
+  function hideAuthError() {
+    document.getElementById("auth-error").classList.add("hidden");
+  }
+
+  // ─────────────────────────────────────────
+  // SESSION
+  // ─────────────────────────────────────────
+  function signIn(email, session) {
+    state.email = email;
+    state.session = session;
+    save("henry_email", email);
+    save("henry_session", session);
+    save("henry_known", "1"); // this device has signed in → no more anonymous freebies
+    state.isPaid = null;
+    hideAuthOverlay();
+    showAccount(email);
+    refreshQuota();
+  }
+
+  function updateUpgradeVisibility() {
+    headerUpgradeBtn.style.display = state.session && state.isPaid === false ? "inline-flex" : "none";
+  }
+
+  // Re-check paid status (e.g., after subscribing) without losing the chat.
+  async function refreshAccess() {
+    if (!state.session) { hidePaywallOverlay(); showAuthOverlay(); return; }
+    await refreshQuota();
+    try {
+      const res = await fetch(`${FN}/check-message-count`, { headers: authHeaders() });
+      const d = await res.json();
+      if (d.tier === "paid") { hidePaywallOverlay(); addMessage("henry", "You're all set — unlimited access is active."); }
+    } catch {}
+  }
+
+  // ─────────────────────────────────────────
+  // OVERLAYS
+  // ─────────────────────────────────────────
+  function showAuthOverlay() {
+    authOverlay.classList.remove("hidden");
+    inputEl.disabled = true; sendBtn.disabled = true;
+    document.getElementById("email-section").classList.remove("hidden");
+    document.getElementById("code-section").classList.add("hidden");
+    hideAuthError();
+  }
+  function hideAuthOverlay() {
+    authOverlay.classList.add("hidden");
+    inputEl.disabled = false; sendBtn.disabled = false;
+  }
+  function showPaywallOverlay() {
+    paywallOverlay.classList.remove("hidden");
+    inputEl.disabled = true; sendBtn.disabled = true;
+  }
+  function hidePaywallOverlay() {
+    paywallOverlay.classList.add("hidden");
+    inputEl.disabled = false; sendBtn.disabled = false;
+  }
+  function showHistoryOverlay() {
+    if (!state.session) { showAuthOverlay(); return; }
+    historyOverlay.classList.remove("hidden");
+    loadHistoryList();
+  }
+  function hideHistoryOverlay() {
+    historyOverlay.classList.add("hidden");
+  }
+
+  // ─────────────────────────────────────────
+  // CHAT HISTORY
+  // ─────────────────────────────────────────
+  async function loadHistoryList() {
+    historyList.innerHTML = `<div class="history-state">Loading recent chats…</div>`;
+    try {
+      const res = await fetch(`${FN}/chat-history`, { headers: authHeaders() });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "History failed");
+      renderHistoryList(data.chats || []);
+    } catch {
+      historyList.innerHTML = `<div class="history-state">Couldn't load recent chats.</div>`;
+    }
+  }
+
+  function renderHistoryList(chats) {
+    if (!chats.length) {
+      historyList.innerHTML = `<div class="history-state">No recent chats yet.</div>`;
+      return;
+    }
+    historyList.innerHTML = "";
+    chats.forEach((chat) => {
+      const item = document.createElement("div");
+      item.className = "history-item";
+
+      const openBtn = document.createElement("button");
+      openBtn.className = "history-open";
+      openBtn.type = "button";
+      openBtn.title = "Open chat";
+      openBtn.innerHTML = `
+        <div class="history-title"></div>
+        <div class="history-meta"></div>
+      `;
+      openBtn.querySelector(".history-title").textContent = chat.title || "Untitled chat";
+      openBtn.querySelector(".history-meta").textContent = historyMeta(chat);
+      openBtn.addEventListener("click", () => loadChat(chat.id));
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "history-delete";
+      deleteBtn.type = "button";
+      deleteBtn.title = "Delete chat";
+      deleteBtn.textContent = "×";
+      deleteBtn.addEventListener("click", () => deleteChat(chat.id));
+
+      item.appendChild(openBtn);
+      item.appendChild(deleteBtn);
+      historyList.appendChild(item);
+    });
+  }
+
+  function historyMeta(chat) {
+    const updated = chat.updatedAt ? new Date(chat.updatedAt) : null;
+    const when = updated
+      ? updated.toLocaleDateString([], { month: "short", day: "numeric" })
+      : "Recent";
+    const count = chat.messageCount || 0;
+    return `${when} · ${count} message${count === 1 ? "" : "s"}`;
+  }
+
+  async function loadChat(id) {
+    try {
+      const res = await fetch(`${FN}/chat-history?id=${encodeURIComponent(id)}`, { headers: authHeaders() });
+      const data = await res.json();
+      if (!res.ok || !data.chat) throw new Error(data.error || "Chat not found");
+      state.conversationId = data.chat.id;
+      state.messageHistory = Array.isArray(data.chat.messages) ? data.chat.messages : [];
+      save("henry_conv_id", state.conversationId);
+      save("henry_history", JSON.stringify(state.messageHistory));
+      renderHistory();
+      hideHistoryOverlay();
+    } catch {
+      historyList.innerHTML = `<div class="history-state">Couldn't open that chat.</div>`;
+    }
+  }
+
+  async function deleteChat(id) {
+    try {
+      const res = await fetch(`${FN}/chat-history?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: authHeaders(),
+      });
+      if (!res.ok) throw new Error("Delete failed");
+      if (state.conversationId === id) newChat();
+      await loadHistoryList();
+    } catch {
+      historyList.innerHTML = `<div class="history-state">Couldn't delete that chat.</div>`;
+    }
+  }
+
+  // ─────────────────────────────────────────
+  // ATTACHMENTS (client-side PDF text extraction — the file never leaves the browser)
+  // ─────────────────────────────────────────
+  const MAX_ATTACH_BYTES = 5 * 1024 * 1024;
+  const MAX_ATTACH_PAGES = 10;
+  const MAX_ATTACH_CHARS = 12000;
+  const attachBtn = document.getElementById("attach-btn");
+  const attachInput = document.getElementById("attach-input");
+  const attachmentBar = document.getElementById("attachment-bar");
+
+  attachBtn.addEventListener("click", () => {
+    if (state.isWaiting) return;
+    if (!state.session) { showAuthOverlay(); return; }
+    attachInput.click();
+  });
+  document.getElementById("attachment-remove").addEventListener("click", clearAttachment);
+  attachInput.addEventListener("change", async () => {
+    const file = attachInput.files && attachInput.files[0];
+    attachInput.value = "";
+    if (!file) return;
+    if (file.type !== "application/pdf" && !/\.pdf$/i.test(file.name)) {
+      addMessage("henry", "Only PDF attachments are supported for now.");
+      return;
+    }
+    if (file.size > MAX_ATTACH_BYTES) {
+      addMessage("henry", "That PDF is over 5 MB. Please attach a smaller file.");
+      return;
+    }
+    attachBtn.disabled = true;
+    try {
+      const text = await extractPdfText(file);
+      if (!text || text.replace(/\s+/g, "").length < 40) {
+        addMessage("henry", "I couldn't read text from that PDF — it may be a scanned image. Try a text-based PDF, or paste the relevant part into the chat.");
+        return;
+      }
+      state.attachment = { name: file.name, text: text.slice(0, MAX_ATTACH_CHARS) };
+      document.getElementById("attachment-name").textContent =
+        `📎 ${file.name}` + (text.length > MAX_ATTACH_CHARS ? " (long document — first part only)" : "");
+      attachmentBar.classList.remove("hidden");
+      inputEl.focus();
+    } catch {
+      addMessage("henry", "Sorry, I couldn't process that PDF. Please try again.");
+    } finally {
+      attachBtn.disabled = false;
+    }
+  });
+
+  function clearAttachment() {
+    state.attachment = null;
+    attachmentBar.classList.add("hidden");
+  }
+
+  let pdfjsLoading = null;
+  function loadPdfJs() {
+    if (window.pdfjsLib) return Promise.resolve();
+    if (!pdfjsLoading) {
+      pdfjsLoading = new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+        s.onload = () => {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+          resolve();
+        };
+        s.onerror = () => { pdfjsLoading = null; reject(new Error("pdf.js failed to load")); };
+        document.head.appendChild(s);
+      });
+    }
+    return pdfjsLoading;
+  }
+
+  async function extractPdfText(file) {
+    await loadPdfJs();
+    const data = await file.arrayBuffer();
+    const pdf = await window.pdfjsLib.getDocument({ data }).promise;
+    const pages = Math.min(pdf.numPages, MAX_ATTACH_PAGES);
+    let out = "";
+    for (let i = 1; i <= pages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      out += content.items.map((it) => it.str).join(" ") + "\n";
+      if (out.length > MAX_ATTACH_CHARS) break;
+    }
+    return out.replace(/[ \t]+/g, " ").trim();
+  }
+
+  // ─────────────────────────────────────────
+  // SAVED ANSWERS (Henry Basic feature)
+  // ─────────────────────────────────────────
+  const savedOverlay = document.getElementById("saved-overlay");
+  const saveOverlay = document.getElementById("save-overlay");
+  const savedList = document.getElementById("saved-list");
+  const savedTagbar = document.getElementById("saved-tagbar");
+  const savedSearch = document.getElementById("saved-search");
+
+  document.getElementById("saved-close").addEventListener("click", hideSavedOverlay);
+  document.getElementById("save-close").addEventListener("click", hideSaveOverlay);
+  document.getElementById("save-confirm-btn").addEventListener("click", confirmSaveAnswer);
+  savedSearch.addEventListener("input", renderSavedList);
+
+  function beginSaveAnswer(question, answer, btn) {
+    if (!state.session) { showAuthOverlay(); return; }
+    if (state.isPaid === false) { showPaywallOverlay(); return; }
+    const cleanQuestion = String(question || "").replace(ATTACH_MARKER, "").trim();
+    state.pendingSave = { question: cleanQuestion, answer, btn };
+    const title = cleanQuestion.replace(/\s+/g, " ").trim();
+    document.getElementById("save-title").value =
+      title.length > 120 ? title.slice(0, 117) + "..." : title;
+    document.getElementById("save-tags").value = "";
+    document.getElementById("save-error").classList.add("hidden");
+    saveOverlay.classList.remove("hidden");
+    document.getElementById("save-title").focus();
+  }
+
+  async function confirmSaveAnswer() {
+    if (!state.pendingSave) return;
+    const btn = document.getElementById("save-confirm-btn");
+    const errEl = document.getElementById("save-error");
+    errEl.classList.add("hidden");
+    btn.disabled = true; btn.textContent = "Saving…";
+    try {
+      const res = await fetch(`${FN}/saved-answers`, {
+        method: "POST",
+        headers: authHeaders(),
+        body: JSON.stringify({
+          question: state.pendingSave.question,
+          answer: state.pendingSave.answer,
+          title: document.getElementById("save-title").value.trim(),
+          tags: document.getElementById("save-tags").value.split(",").map((t) => t.trim()).filter(Boolean),
+        }),
+      });
+      const d = await res.json();
+      if (res.status === 403 && d.upgradeRequired) { hideSaveOverlay(); showPaywallOverlay(); return; }
+      if (!res.ok || !d.item) throw new Error(d.error || "Save failed");
+      const sourceBtn = state.pendingSave.btn;
+      if (sourceBtn) { sourceBtn.textContent = "Saved ✓"; sourceBtn.classList.add("saved"); sourceBtn.disabled = true; }
+      state.pendingSave = null;
+      hideSaveOverlay();
+    } catch {
+      errEl.textContent = "Couldn't save the answer. Please try again.";
+      errEl.classList.remove("hidden");
+    } finally {
+      btn.disabled = false; btn.textContent = "Save answer";
+    }
+  }
+
+  function hideSaveOverlay() {
+    saveOverlay.classList.add("hidden");
+    state.pendingSave = null;
+  }
+
+  function showSavedOverlay() {
+    if (!state.session) { showAuthOverlay(); return; }
+    if (state.isPaid === false) { showPaywallOverlay(); return; }
+    savedOverlay.classList.remove("hidden");
+    savedSearch.value = "";
+    state.savedTagFilter = null;
+    loadSavedList();
+  }
+  function hideSavedOverlay() {
+    savedOverlay.classList.add("hidden");
+  }
+
+  async function loadSavedList() {
+    savedList.innerHTML = `<div class="history-state">Loading saved answers…</div>`;
+    savedTagbar.innerHTML = "";
+    try {
+      const res = await fetch(`${FN}/saved-answers`, { headers: authHeaders() });
+      const data = await res.json();
+      if (res.status === 403 && data.upgradeRequired) { hideSavedOverlay(); showPaywallOverlay(); return; }
+      if (!res.ok) throw new Error(data.error || "Saved answers failed");
+      state.savedItems = data.items || [];
+      renderSavedTagbar();
+      renderSavedList();
+    } catch {
+      savedList.innerHTML = `<div class="history-state">Couldn't load saved answers.</div>`;
+    }
+  }
+
+  function renderSavedTagbar() {
+    savedTagbar.innerHTML = "";
+    const tags = [...new Set(state.savedItems.flatMap((i) => i.tags || []))].sort();
+    tags.forEach((tag) => {
+      const chip = document.createElement("button");
+      chip.className = "tag-chip" + (state.savedTagFilter === tag ? " active" : "");
+      chip.type = "button";
+      chip.textContent = tag;
+      chip.addEventListener("click", () => {
+        state.savedTagFilter = state.savedTagFilter === tag ? null : tag;
+        renderSavedTagbar();
+        renderSavedList();
+      });
+      savedTagbar.appendChild(chip);
+    });
+  }
+
+  function renderSavedList() {
+    const q = savedSearch.value.trim().toLowerCase();
+    const items = state.savedItems.filter((item) => {
+      if (state.savedTagFilter && !(item.tags || []).includes(state.savedTagFilter)) return false;
+      if (!q) return true;
+      const hay = `${item.title} ${item.question} ${item.answer} ${(item.tags || []).join(" ")}`.toLowerCase();
+      return hay.includes(q);
+    });
+    if (!items.length) {
+      savedList.innerHTML = `<div class="history-state">${
+        state.savedItems.length ? "No saved answers match." : "Nothing saved yet. Use “Save answer” under any of Henry's replies."
+      }</div>`;
+      return;
+    }
+    savedList.innerHTML = "";
+    items.forEach((item) => {
+      const el = document.createElement("div");
+      el.className = "saved-item";
+
+      const head = document.createElement("button");
+      head.className = "saved-item-head";
+      head.type = "button";
+      head.innerHTML = `<div style="min-width:0"><div class="saved-item-title"></div><div class="saved-item-meta"></div></div><div style="color:var(--muted)">▾</div>`;
+      head.querySelector(".saved-item-title").textContent = item.title;
+      const when = new Date(item.createdAt).toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" });
+      head.querySelector(".saved-item-meta").textContent =
+        (item.tags || []).length ? `${when} · ${item.tags.join(", ")}` : when;
+
+      const body = document.createElement("div");
+      body.className = "saved-item-body hidden";
+
+      head.addEventListener("click", () => {
+        if (body.classList.contains("hidden") && !body.dataset.rendered) {
+          if (item.question) {
+            const qEl = document.createElement("div");
+            qEl.className = "saved-question";
+            qEl.textContent = item.question;
+            body.appendChild(qEl);
+          }
+          const aEl = document.createElement("div");
+          if (typeof marked !== "undefined") aEl.innerHTML = marked.parse(item.answer);
+          else aEl.textContent = item.answer;
+          aEl.querySelectorAll("a[href]").forEach((a) => { a.target = "_blank"; a.rel = "noopener noreferrer"; });
+          body.appendChild(aEl);
+
+          const actions = document.createElement("div");
+          actions.className = "saved-item-actions";
+          const del = document.createElement("button");
+          del.className = "save-answer-btn";
+          del.type = "button";
+          del.style.color = "var(--danger)";
+          del.textContent = "Delete";
+          del.addEventListener("click", () => deleteSavedItem(item.id));
+          actions.appendChild(del);
+          body.appendChild(actions);
+          body.dataset.rendered = "1";
+        }
+        body.classList.toggle("hidden");
+      });
+
+      el.appendChild(head);
+      el.appendChild(body);
+      savedList.appendChild(el);
+    });
+  }
+
+  async function deleteSavedItem(id) {
+    try {
+      const res = await fetch(`${FN}/saved-answers?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        headers: authHeaders(),
+      });
+      if (!res.ok) throw new Error("Delete failed");
+      state.savedItems = state.savedItems.filter((i) => i.id !== id);
+      renderSavedTagbar();
+      renderSavedList();
+    } catch {
+      savedList.innerHTML = `<div class="history-state">Couldn't delete that saved answer.</div>`;
+    }
+  }
+
+  // ─────────────────────────────────────────
+  // CHECKOUT
+  // ─────────────────────────────────────────
+  document.getElementById("upgrade-btn").addEventListener("click", (e) => {
+    if (state.checkoutPlan === "student") state.checkoutPlan = "monthly";
+    startCheckout(e);
+  });
+  document.getElementById("upgrade-student-btn").addEventListener("click", (e) => {
+    state.checkoutPlan = "student";
+    startCheckout(e);
+  });
+  document.getElementById("upgrade-yearly-link").addEventListener("click", (e) => {
+    e.preventDefault();
+    state.checkoutPlan = "yearly";
+    startCheckout(e);
+  });
+  async function startCheckout(e) {
+    if (!state.session) { hidePaywallOverlay(); showAuthOverlay(); return; }
+    const btn = e?.currentTarget || document.getElementById("upgrade-btn");
+    const originalText = btn.textContent;
+    const fromPaywall = btn.id === "upgrade-btn" || btn.id === "upgrade-student-btn";
+    const errEl = document.getElementById("paywall-error");
+    errEl.classList.add("hidden");
+    btn.disabled = true; btn.textContent = "Loading checkout…";
+    try {
+      const res = await fetch(`${FN}/create-checkout`, {
+        method: "POST",
+        headers: { ...authHeaders(), "content-type": "application/json" },
+        body: JSON.stringify({ plan: state.checkoutPlan || "monthly" }),
+      });
+      const d = await res.json();
+      if (d.url) { window.location.href = d.url; return; }
+      if (!fromPaywall) showPaywallOverlay();
+      errEl.textContent = d.error || "Couldn't start checkout. Please try again.";
+      errEl.classList.remove("hidden");
+    } catch {
+      if (!fromPaywall) showPaywallOverlay();
+      errEl.textContent = "Couldn't start checkout. Please try again.";
+      errEl.classList.remove("hidden");
+    } finally {
+      btn.disabled = false; btn.textContent = originalText;
+    }
+  }
+
+  // ─────────────────────────────────────────
+  // START
+  // ─────────────────────────────────────────
+  init();
+  import("/advising/preparation.js").then(({ mountPreparation }) => mountPreparation({
+    getHeaders: () => authHeaders(),
+    beforeAnswer: async () => {
+      await preparationAccessReady;
+      const limit = localStorage.getItem("henry_known") ? 0 : CONFIG.FREE_ANONYMOUS_LIMIT;
+      if (!judgeDemo && !state.session && state.anonCount >= limit) { showAuthOverlay(); return false; }
+      if (!judgeDemo && !state.session) { state.anonCount++; save("henry_anon_count", state.anonCount); refreshQuota(); }
+      return true;
+    },
+    getInquiry: () => {
+      const question = inputEl.value || [...state.messageHistory].reverse().find((message) => message.role === "user")?.content || "";
+      return question.split("\n\n--- Attached document:")[0];
+    },
+  })).catch(() => console.warn("Advising preparation could not be loaded. The chat remains available."));
+</script>
+
+<!-- Google Identity Services — loads async, won't block chat -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+</body>
+</html>

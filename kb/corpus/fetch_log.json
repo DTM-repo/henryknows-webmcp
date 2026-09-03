@@ -1,0 +1,206 @@
+[
+ {
+  "slug": "ecfr-8-214.2",
+  "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-23/title-8.xml?part=214&section=214.2",
+  "status": "ok",
+  "note": "as-of 2026-07-23"
+ },
+ {
+  "slug": "ecfr-8-214.3",
+  "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-23/title-8.xml?part=214&section=214.3",
+  "status": "ok",
+  "note": "as-of 2026-07-23"
+ },
+ {
+  "slug": "ecfr-8-214.4",
+  "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-23/title-8.xml?part=214&section=214.4",
+  "status": "ok",
+  "note": "as-of 2026-07-23"
+ },
+ {
+  "slug": "ecfr-8-103.2",
+  "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-23/title-8.xml?part=103&section=103.2",
+  "status": "ok",
+  "note": "as-of 2026-07-23"
+ },
+ {
+  "slug": "ecfr-20-656",
+  "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-23/title-20.xml?part=656",
+  "status": "ok",
+  "note": "as-of 2026-07-23"
+ },
+ {
+  "slug": "ecfr-22-62",
+  "url": "https://www.ecfr.gov/api/versioner/v1/full/2026-07-23/title-22.xml?part=62",
+  "status": "ok",
+  "note": "as-of 2026-07-23"
+ },
+ {
+  "slug": "usc-title-8",
+  "url": "https://uscode.house.gov/download/releasepoints/us/pl/119/102/xml_usc08@119-102.zip",
+  "status": "ok",
+  "note": "7MB xml"
+ },
+ {
+  "slug": "sits-sevis-help-hub",
+  "url": "https://studyinthestates.dhs.gov/sevis-help-hub",
+  "status": "ok",
+  "note": "html 75KB"
+ },
+ {
+  "slug": "sits-help-hub-user-guide",
+  "url": "https://studyinthestates.dhs.gov/sevis-help-hub/sevis-help-hub-user-guide",
+  "status": "ok",
+  "note": "html 152KB"
+ },
+ {
+  "slug": "sits-site-map",
+  "url": "https://studyinthestates.dhs.gov/sevis-help-hub/site-map",
+  "status": "ok",
+  "note": "html 146KB"
+ },
+ {
+  "slug": "sits-seta",
+  "url": "https://studyinthestates.dhs.gov/schools/additional-resources/sevp-external-training-application",
+  "status": "FAIL",
+  "note": "403 Client Error: Forbidden for url: https://studyinthestates.dhs.gov/schools/additional-resources/sevp-external-training-application"
+ },
+ {
+  "slug": "ice-sevis-schools",
+  "url": "https://www.ice.gov/sevis/schools",
+  "status": "ok",
+  "note": "html 185KB"
+ },
+ {
+  "slug": "uscis-policy-manual-home",
+  "url": "https://www.uscis.gov/policy-manual",
+  "status": "ok",
+  "note": "html 85KB"
+ },
+ {
+  "slug": "uscis-book-68600",
+  "url": "https://www.uscis.gov/book/export/html/68600",
+  "status": "ok",
+  "note": "html 11543KB"
+ },
+ {
+  "slug": "j1visa-home",
+  "url": "https://j1visa.state.gov/",
+  "status": "ok",
+  "note": "html 58KB"
+ },
+ {
+  "slug": "j1visa-common-questions",
+  "url": "https://j1visa.state.gov/sponsors/common-questions/",
+  "status": "ok",
+  "note": "html 60KB"
+ },
+ {
+  "slug": "j1visa-regs-compliance",
+  "url": "https://j1visa.state.gov/sponsors/current/regulations-compliance/",
+  "status": "ok",
+  "note": "html 78KB"
+ },
+ {
+  "slug": "j1visa-ro-aro-training",
+  "url": "https://j1visa.state.gov/sponsors/current/ro-aro-virtual-training/",
+  "status": "ok",
+  "note": "html 56KB"
+ },
+ {
+  "slug": "j1visa-sevis-training-videos",
+  "url": "https://j1visa.state.gov/sponsors/current/sevis/sevis-training-videos/",
+  "status": "ok",
+  "note": "html 59KB"
+ },
+ {
+  "slug": "j1visa-adjustments-extensions",
+  "url": "https://j1visa.state.gov/participants/current/adjustments-and-extensions/",
+  "status": "ok",
+  "note": "html 60KB"
+ },
+ {
+  "slug": "dos-visa-wait-times",
+  "url": "https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/global-visa-wait-times.html",
+  "status": "FAIL",
+  "note": "403 Client Error: Forbidden for url: https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/global-visa-wait-times.html"
+ },
+ {
+  "slug": "dol-flag-processing-times",
+  "url": "https://flag.dol.gov/processingtimes",
+  "status": "ok",
+  "note": "html 156KB"
+ },
+ {
+  "slug": "dol-eta9089-determination",
+  "url": "https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/ETA-9089%20Final%20Determination%20-Compliant.pdf",
+  "status": "FAIL",
+  "note": "403 Client Error: Forbidden for url: https://www.dol.gov/sites/dolgov/files/ETA/oflc/pdfs/ETA-9089%20Final%20Determination%20-Compliant.pdf"
+ },
+ {
+  "slug": "nafsa-am-rss",
+  "url": "https://www.nafsa.org/rss-feed.xml?feed=am_news",
+  "status": "ok",
+  "note": "xml"
+ },
+ {
+  "slug": "fr-2025-00582",
+  "url": "https://www.federalregister.gov/d/2025-00582",
+  "status": "ok",
+  "note": "html 87KB"
+ },
+ {
+  "slug": "ice-stem-opt-hub",
+  "url": "https://www.ice.gov/sevis/stem-opt",
+  "status": "FAIL",
+  "note": "404 Client Error: Not Found for url: https://www.ice.gov/sevis/stem-opt"
+ },
+ {
+  "slug": "sits-sevp-portal-help",
+  "url": "https://studyinthestates.dhs.gov/sevp-portal-help",
+  "status": "ok",
+  "note": "html 83KB"
+ },
+ {
+  "slug": "ice-i901",
+  "url": "https://www.ice.gov/sevis/i901",
+  "status": "ok",
+  "note": "html 115KB"
+ },
+ {
+  "slug": "uscis-i765-instructions",
+  "url": "https://www.uscis.gov/sites/default/files/document/forms/i-765instr.pdf",
+  "status": "ok",
+  "note": "pdf 566KB"
+ },
+ {
+  "slug": "uscis-i539-instructions",
+  "url": "https://www.uscis.gov/sites/default/files/document/forms/i-539instr.pdf",
+  "status": "ok",
+  "note": "pdf 312KB"
+ },
+ {
+  "slug": "fr-79-60293-j-subpart-a",
+  "url": "https://www.federalregister.gov/citation/79-FR-60293",
+  "status": "ok",
+  "note": "html 30KB"
+ },
+ {
+  "slug": "fr-2026-14439-ds-final-rule",
+  "url": "https://www.federalregister.gov/d/2026-14439",
+  "status": "ok",
+  "note": "html 1832KB"
+ },
+ {
+  "slug": "nafsa-sevp-dso-training-text",
+  "url": "https://www.nafsa.org/professional-resources/browse-by-interest/sevp-training-dsos-course-text",
+  "status": "ok",
+  "note": "html 30KB"
+ },
+ {
+  "slug": "census-naics",
+  "url": "https://www.census.gov/naics/",
+  "status": "FAIL",
+  "note": "403 Client Error: Forbidden for url: https://www.census.gov/naics/"
+ }
+]
